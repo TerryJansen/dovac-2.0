@@ -15,6 +15,9 @@
   --border: #d7e0e6;
   --accent: #d52e26;
   --accent-hover: #b4221c;
+  --vacuum: #0c8d95;
+  --air: #2774ba;
+  --systems: #b66a32;
   --white: #fff;
   --header: rgba(250, 251, 252, 0.96);
   color-scheme: light;
@@ -29,6 +32,9 @@
   --border: #344957;
   --accent: #ff766b;
   --accent-hover: #ff9188;
+  --vacuum: #41c4c5;
+  --air: #70aefa;
+  --systems: #f0a265;
   --header: rgba(17, 29, 39, 0.96);
   color-scheme: dark;
 }
@@ -43,6 +49,9 @@
     --border: #344957;
     --accent: #ff766b;
     --accent-hover: #ff9188;
+    --vacuum: #41c4c5;
+    --air: #70aefa;
+    --systems: #f0a265;
     --header: rgba(17, 29, 39, 0.96);
     color-scheme: dark;
   }
@@ -54,6 +63,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
+  overflow-x: clip;
 }
 a {
   color: inherit;
@@ -431,8 +441,11 @@ button {
   min-height: 345px;
   background: var(--panel);
 }
+.solution.vacuum {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--vacuum) 14%, var(--panel)), var(--panel) 70%);
+}
 .solution.blower {
-  background: var(--surface);
+  background: linear-gradient(145deg, color-mix(in srgb, var(--air) 14%, var(--surface)), var(--surface) 70%);
 }
 .category-label {
   font-size: 13px;
@@ -541,6 +554,27 @@ button {
 .product-navigator-card li svg {
   flex: 0 0 auto;
   color: var(--accent);
+}
+.product-navigator-card:nth-child(1) {
+  border-top: 4px solid var(--vacuum);
+}
+.product-navigator-card:nth-child(1) h3,
+.product-navigator-card:nth-child(1) li svg {
+  color: var(--vacuum);
+}
+.product-navigator-card:nth-child(2) {
+  border-top: 4px solid var(--air);
+}
+.product-navigator-card:nth-child(2) h3,
+.product-navigator-card:nth-child(2) li svg {
+  color: var(--air);
+}
+.product-navigator-card:nth-child(3) {
+  border-top: 4px solid var(--systems);
+}
+.product-navigator-card:nth-child(3) h3,
+.product-navigator-card:nth-child(3) li svg {
+  color: var(--systems);
 }
 .service-section {
   background: var(--surface);
@@ -691,6 +725,7 @@ button {
   line-height: 1.05;
   letter-spacing: -0.05em;
   max-width: 900px;
+  overflow-wrap: anywhere;
 }
 .lead {
   font-size: 20px;
