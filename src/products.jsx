@@ -111,36 +111,54 @@ export function ProductExplorer({ ui }) {
     </section>
   );
 }
-export function FeaturedProducts({ ui }) {
+export function ProductNavigator({ ui }) {
   const { Reveal } = ui;
+  const groups = [
+    {
+      name: "Vacuümtechniek",
+      description: "Voor creëren, vasthouden en regelen van vacuüm.",
+      items: products.filter((p) => p.group === "Vacuüm"),
+    },
+    {
+      name: "Blowertechniek",
+      description: "Voor luchttransport, beluchting en gerichte luchtstroom.",
+      items: products.filter((p) => p.group === "Lucht"),
+    },
+    {
+      name: "Systemen & onderdelen",
+      description: "Voor complete installaties en een passende vervanging.",
+      items: products.filter((p) => p.group === "Systemen & onderdelen"),
+    },
+  ];
   return (
-    <section className="featured-products" aria-label="Uitgelichte productgroepen">
-      <div className="wrap featured-products-head">
+    <section className="product-navigator" aria-label="Productgroepen verkennen">
+      <div className="wrap">
+        <div className="product-navigator-head">
         <div>
-          <p className="eyebrow">Uitgelicht</p>
-          <h2>Techniek voor ieder proces.</h2>
+            <p className="eyebrow">Ons assortiment</p>
+            <h2>Vind direct de juiste techniek.</h2>
         </div>
-        <p>Swipe door alle productgroepen en ontdek wat bij uw toepassing past.</p>
-      </div>
-      <div className="featured-product-rail" tabIndex="0" aria-label="Swipebare productgroepen">
-        {products.map((p, index) => (
-          <Reveal key={p.slug} className="featured-product-card" delay={index * 0.04}>
-            <a href={url(`producten/${p.slug}`)}>
-              <img
-                src={asset(`products/${p.slug}`)}
-                alt={`${p.name} voor industriële toepassingen`}
-                width="960"
-                height="720"
-                loading="eager"
-              />
-              <div>
-                <span>{p.group}</span>
-                <h3>{p.name}</h3>
-                <ArrowUpRight size={22} aria-hidden="true" />
-              </div>
-            </a>
-          </Reveal>
-        ))}
+          <a className="text-link" href={url("producten")}>
+            Bekijk alle productgroepen <ArrowRight size={20} />
+          </a>
+        </div>
+        <div className="product-navigator-grid">
+          {groups.map((group, index) => (
+            <Reveal key={group.name} className="product-navigator-card" delay={index * 0.06}>
+              <h3>{group.name}</h3>
+              <p>{group.description}</p>
+              <ul>
+                {group.items.map((p) => (
+                  <li key={p.slug}>
+                    <a href={url(`producten/${p.slug}`)}>
+                      {p.name} <ArrowUpRight size={17} aria-hidden="true" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
