@@ -197,6 +197,7 @@ function Partners() {
     ["master-blower", "Master Blower"],
     ["galex-air", "Galex Air"],
   ];
+  const loopPartners = [...partners, ...partners];
   return (
     <section className="partners" aria-labelledby="partners-title">
       <div className="wrap partners-inner">
@@ -207,19 +208,24 @@ function Partners() {
             vertegenwoordigen.
           </p>
         </div>
-        <ul className="partner-logos">
-          {partners.map(([slug, name]) => (
-            <li key={slug}>
-              <img
-                src={`${base}images/partners/${slug}.webp`}
-                alt={`${name} logo`}
-                width="220"
-                height="130"
-                loading="lazy"
-              />
-            </li>
-          ))}
-        </ul>
+        <div className="partner-marquee">
+          <ul className="partner-logos">
+            {loopPartners.map(([slug, name], index) => (
+              <li
+                key={`${slug}-${index}`}
+                aria-hidden={index >= partners.length || undefined}
+              >
+                <img
+                  src={`${base}images/partners/${slug}.webp`}
+                  alt={`${name} logo`}
+                  width="220"
+                  height="130"
+                  loading="lazy"
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

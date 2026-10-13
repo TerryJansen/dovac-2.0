@@ -13,8 +13,12 @@ test("homepage presents clear conversion actions", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: "Onze partners" }),
   ).toBeVisible();
-  await expect(page.getByAltText("DVP logo")).toBeVisible();
-  await expect(page.getByAltText("ASCO logo")).toBeVisible();
-  await expect(page.getByAltText("Master Blower logo")).toBeVisible();
-  await expect(page.getByAltText("Galex Air logo")).toBeVisible();
+  await expect(page.getByAltText("DVP logo").first()).toBeVisible();
+  await expect(page.getByAltText("ASCO logo").first()).toBeVisible();
+  await expect(page.getByAltText("Master Blower logo").first()).toBeVisible();
+  await expect(page.getByAltText("Galex Air logo").first()).toBeVisible();
+  await expect(page.locator(".partner-logos")).toHaveCSS(
+    "animation-name",
+    "partner-loop",
+  );
 });
