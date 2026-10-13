@@ -16,6 +16,7 @@ import {
   CheckCircle,
 } from "@phosphor-icons/react";
 import { products, faqs, url, asset } from "./site-data";
+import { applicationPages, industries } from "./source-content";
 import { ProductExplorer, ProductDetail } from "./products";
 import ContactForm from "./contact-form";
 import "./pages.css";
@@ -34,10 +35,158 @@ export function ProductIcon({ type, size = 58 }) {
   return <Icon size={size} weight="light" aria-hidden="true" />;
 }
 
+function SourceLinks({ slugs }) {
+  return (
+    <div className="source-product-links">
+      {slugs.map((slug) => {
+        const product = products.find((item) => item.slug === slug);
+        return product ? (
+          <a key={slug} href={url(`producten/${slug}`)}>
+            {product.name} <ArrowUpRight size={18} aria-hidden="true" />
+          </a>
+        ) : null;
+      })}
+    </div>
+  );
+}
+
+function ArticlePage({ article, ui }) {
+  const { Reveal, Button, PageTitle, ContactBand } = ui;
+  return (
+    <>
+      <div className="wrap breadcrumbs">
+        <a href={url("toepassingen")}>Toepassingen</a>
+        <span>/</span>
+        <span>{article.title}</span>
+      </div>
+      <PageTitle label="Toepassingen" description={article.intro}>
+        {article.title}
+      </PageTitle>
+      <section className="wrap source-article">
+        {article.sections.map(([title, text], index) => (
+          <Reveal
+            key={title}
+            className="source-article-row"
+            delay={index * 0.04}
+          >
+            <h2>{title}</h2>
+            <p>{text}</p>
+          </Reveal>
+        ))}
+      </section>
+      <section className="wrap related-technique">
+        <p className="eyebrow">Passende techniek</p>
+        <h2>Van toepassing naar een complete oplossing.</h2>
+        <SourceLinks slugs={article.products} />
+        <Button
+          href={
+            url("contact") + "?onderwerp=" + encodeURIComponent(article.title)
+          }
+        >
+          Vraag technisch advies
+        </Button>
+      </section>
+      <ContactBand />
+    </>
+  );
+}
+
+function ApplicationsPage({ ui }) {
+  const { Reveal, PageTitle, ContactBand } = ui;
+  return (
+    <>
+      <PageTitle
+        label="Toepassingen"
+        description="DOVAC levert producten voor diverse toepassingen. Ontdek welke techniek aansluit op uw proces."
+      >
+        Techniek die uw proces vooruithelpt.
+      </PageTitle>
+      <section className="wrap source-card-grid">
+        {Object.entries(applicationPages).map(([slug, article], index) => (
+          <Reveal key={slug} className="source-card" delay={index * 0.05}>
+            <p className="eyebrow">Toepassing</p>
+            <h2>{article.title}</h2>
+            <p>{article.intro}</p>
+            <a className="text-link" href={url(`toepassingen/${slug}`)}>
+              Bekijk toepassing <ArrowRight size={20} />
+            </a>
+          </Reveal>
+        ))}
+      </section>
+      <ContactBand />
+    </>
+  );
+}
+
+function IndustriesPage({ page, ui }) {
+  const { Reveal, PageTitle, ContactBand } = ui;
+  const industry = industries.find(([slug]) => page === `industrieen/${slug}`);
+  if (industry) {
+    const [, title, description] = industry;
+    return (
+      <>
+        <div className="wrap breadcrumbs">
+          <a href={url("industrieen")}>Industrieën</a>
+          <span>/</span>
+          <span>{title}</span>
+        </div>
+        <PageTitle label="Industrieën" description={description}>
+          {title}
+        </PageTitle>
+        <section className="wrap industry-focus">
+          <Reveal>
+            <h2>Techniek begint bij uw proces.</h2>
+            <p>{description}</p>
+            <p>
+              DOVAC kijkt naar de toepassing, benodigde capaciteit, druk,
+              bedrijfsomstandigheden en gewenste continuïteit. Zo ontstaat een
+              oplossing die past bij het proces in plaats van alleen bij een
+              bestaand typenummer.
+            </p>
+            <a className="text-link" href={url("contact")}>
+              Bespreek uw toepassing <ArrowUpRight size={20} />
+            </a>
+          </Reveal>
+        </section>
+        <ContactBand />
+      </>
+    );
+  }
+  return (
+    <>
+      <PageTitle
+        label="Industrieën"
+        description="Vacuüm- en blowertechniek voor uiteenlopende productie- en waterprocessen."
+      >
+        Kennis van techniek. Oog voor uw industrie.
+      </PageTitle>
+      <section className="wrap source-card-grid industry-grid">
+        {industries.map(([slug, title, description], index) => (
+          <Reveal key={slug} className="source-card" delay={index * 0.04}>
+            <p className="eyebrow">Industrie</p>
+            <h2>{title}</h2>
+            <p>{description}</p>
+            <a className="text-link" href={url(`industrieen/${slug}`)}>
+              Meer over deze industrie <ArrowRight size={20} />
+            </a>
+          </Reveal>
+        ))}
+      </section>
+      <ContactBand />
+    </>
+  );
+}
+
 export default function InnerPage({ page, ui }) {
   const { Reveal, Button, PageTitle, ContactBand } = ui;
   const product = products.find((p) => page === `producten/${p.slug}`);
   if (product) return <ProductDetail product={product} ui={ui} />;
+  const application = applicationPages[page.replace("toepassingen/", "")];
+  if (page.startsWith("toepassingen/") && application)
+    return <ArticlePage article={application} ui={ui} />;
+  if (page === "toepassingen") return <ApplicationsPage ui={ui} />;
+  if (page === "industrieen" || page.startsWith("industrieen/"))
+    return <IndustriesPage page={page} ui={ui} />;
   if (page === "producten")
     return (
       <>
@@ -153,7 +302,7 @@ export default function InnerPage({ page, ui }) {
         <ContactBand />
       </>
     );
-  if (page === "datasheets")
+  if (page === "datasheets" || page === "documentatie")
     return (
       <>
         <PageTitle
@@ -200,7 +349,7 @@ export default function InnerPage({ page, ui }) {
         <ContactBand />
       </>
     );
-  if (page === "faq")
+  if (page === "faq" || page === "veelgestelde-vragen")
     return (
       <>
         <PageTitle

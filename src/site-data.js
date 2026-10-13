@@ -5,7 +5,9 @@ export const routes = [
   ["Producten", "producten"],
   ["Onderhoud & Reparaties", "onderhoud-reparaties/onderhoud-en-reparaties"],
   ["Datasheets", "datasheets"],
-  ["FAQ", "faq"],
+  ["Toepassingen", "toepassingen"],
+  ["Industrieën", "industrieen"],
+  ["FAQ", "veelgestelde-vragen"],
   ["Over ons", "over-ons"],
   ["Contact", "contact"],
 ];
@@ -71,6 +73,21 @@ export const products = [
     why: "Een blower moet passen bij de totale installatie. Bespreek de benodigde capaciteit en bedrijfsomstandigheden met onze specialisten.",
   },
   {
+    slug: "beluchters",
+    name: "Beluchters",
+    group: "Lucht",
+    icon: "air",
+    intro: "Zuurstof en beweging in ieder bassin.",
+    description:
+      "Voor water waarin zuurstof, circulatie en een stabiele kwaliteit essentieel zijn. De installatie wordt berekend op uw bassin en proces.",
+    uses: [
+      "Waterdiepte en benodigde tegendruk",
+      "Leidinglengte en gewenste luchthoeveelheid",
+      "Continu energieverbruik en bescherming",
+    ],
+    why: "De juiste beluchter voorkomt stilstaand water, beperkt storingen en voorkomt dat een continu draaiende blower onnodig energie verbruikt.",
+  },
+  {
     slug: "luchtmessen",
     name: "Luchtmessen",
     group: "Lucht",
@@ -99,6 +116,21 @@ export const products = [
       "Assemblage en testen",
     ],
     why: "Een goed systeem is meer dan een verzameling onderdelen. DOVAC beschikt over een werkplaats en proefstand voor assemblage en testen.",
+  },
+  {
+    slug: "vacuumsystemen",
+    name: "Vacuümsystemen",
+    group: "Systemen & onderdelen",
+    icon: "system",
+    intro: "Eén centrale oplossing voor meerdere afnamepunten.",
+    description:
+      "Complete vacuümsystemen met pompen, vat en regeling, afgestemd op capaciteit, continuïteit en energieverbruik.",
+    uses: [
+      "Aantal afnamepunten en gelijktijdigheid",
+      "Benodigde continuïteit en reserve",
+      "Regeling en energiegebruik",
+    ],
+    why: "Een centraal systeem schakelt mee met de vraag en kan voor meerdere afnamepunten een betrouwbare, overzichtelijke oplossing bieden.",
   },
   {
     slug: "spare-parts",
