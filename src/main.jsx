@@ -190,6 +190,40 @@ export function ContactBand() {
     </section>
   );
 }
+function Partners() {
+  const partners = [
+    ["dvp", "DVP"],
+    ["asco", "ASCO"],
+    ["master-blower", "Master Blower"],
+    ["galex-air", "Galex Air"],
+  ];
+  return (
+    <section className="partners" aria-labelledby="partners-title">
+      <div className="wrap partners-inner">
+        <div>
+          <h2 id="partners-title">Onze partners</h2>
+          <p>
+            Merken die we met technische kennis en korte lijnen
+            vertegenwoordigen.
+          </p>
+        </div>
+        <ul className="partner-logos">
+          {partners.map(([slug, name]) => (
+            <li key={slug}>
+              <img
+                src={`${base}images/partners/${slug}.webp`}
+                alt={`${name} logo`}
+                width="220"
+                height="130"
+                loading="lazy"
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
 function Footer() {
   return (
     <footer className="footer">
@@ -500,6 +534,7 @@ function App() {
           />
         )}
       </main>
+      <Partners />
       <Footer />
       {requestMode && (
         <RequestModal mode={requestMode} onClose={() => setRequestMode(null)} />

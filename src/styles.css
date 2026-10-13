@@ -442,10 +442,18 @@ button {
   background: var(--panel);
 }
 .solution.vacuum {
-  background: linear-gradient(145deg, color-mix(in srgb, var(--vacuum) 14%, var(--panel)), var(--panel) 70%);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--vacuum) 14%, var(--panel)),
+    var(--panel) 70%
+  );
 }
 .solution.blower {
-  background: linear-gradient(145deg, color-mix(in srgb, var(--air) 14%, var(--surface)), var(--surface) 70%);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--air) 14%, var(--surface)),
+    var(--surface) 70%
+  );
 }
 .category-label {
   font-size: 13px;
@@ -664,6 +672,53 @@ button {
   letter-spacing: 0;
   color: var(--muted);
   margin-top: 9px;
+}
+.partners {
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+.partners-inner {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.65fr) minmax(0, 1.35fr);
+  gap: 70px;
+  align-items: center;
+  padding-block: 62px;
+}
+.partners h2 {
+  font-size: clamp(30px, 3vw, 43px);
+  letter-spacing: -0.045em;
+}
+.partners p {
+  max-width: 310px;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.partner-logos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.partner-logos li {
+  display: grid;
+  min-height: 108px;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 15px;
+  background: var(--surface);
+}
+.partner-logos img {
+  display: block;
+  width: 100%;
+  max-width: 150px;
+  max-height: 70px;
+  object-fit: contain;
 }
 .footer {
   background: var(--surface);
@@ -1092,6 +1147,21 @@ button {
   }
   .big-phone > svg:last-child {
     margin-left: auto;
+  }
+  .partners-inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-block: 45px;
+  }
+  .partners p {
+    max-width: 400px;
+  }
+  .partner-logos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .partner-logos li {
+    min-height: 92px;
   }
   .footer {
     padding-top: 40px;
