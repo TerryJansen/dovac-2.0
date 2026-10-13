@@ -181,6 +181,19 @@ function IndustriesPage({ page, ui }) {
             </a>
           </Reveal>
         ))}
+        <Reveal className="industry-advice" delay={industries.length * 0.04}>
+          <h2>Op zoek naar een oplossing op maat?</h2>
+          <p>
+            Vraag een vrijblijvend adviesgesprek aan bij DOVAC en kom in contact
+            met onze specialisten.
+          </p>
+          <a
+            className="button industry-advice-button"
+            href={url("contact") + "?onderwerp=Advies%20op%20maat"}
+          >
+            Advies aanvragen <ArrowUpRight size={20} aria-hidden="true" />
+          </a>
+        </Reveal>
       </section>
       <ContactBand />
     </>

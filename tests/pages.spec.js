@@ -62,3 +62,13 @@ test("every industry detail places a square image beside its copy", async ({
     expect(layout.imageX, industry).toBeGreaterThan(layout.copyX);
   }
 });
+
+test("industries overview offers custom-solution advice", async ({ page }) => {
+  await page.goto("./nl/industrieen/");
+  await expect(
+    page.getByRole("heading", { name: "Op zoek naar een oplossing op maat?" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Advies aanvragen" }),
+  ).toHaveAttribute("href", /nl\/contact\/\?onderwerp=Advies%20op%20maat/);
+});
