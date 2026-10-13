@@ -1,5 +1,6 @@
 export const applicationPages = {
   "vacuum-verpakken": {
+    image: "c1699f6b95f425ca.png",
     title: "Vacuüm verpakken: langer houdbaar met de juiste vacuümpomp",
     intro:
       "Loop langs het koelvak van de supermarkt en u ziet het resultaat van vacuümverpakken overal: vlees en vis strak in folie, voorverpakte kaas en kant-en-klaarmaaltijden in gesealde trays.",
@@ -20,6 +21,7 @@ export const applicationPages = {
     products: ["vacuumpompen", "draaischuifpompen", "zijkanaalventilatoren"],
   },
   "drogen-met-luchtmessen": {
+    image: "5854a98d3f0ab542.png",
     title: "Drogen met luchtmessen: snel, gelijkmatig en energiezuinig",
     intro:
       "Gewassen flessen die geëtiketteerd moeten worden, kratten uit de wasser en blikjes die nat uit de pasteurisatie komen: in productielijnen moeten producten voortdurend snel en volledig droog.",
@@ -40,6 +42,7 @@ export const applicationPages = {
     products: ["luchtmessen", "zijkanaalventilatoren", "turbo-blowers"],
   },
   beluchting: {
+    image: "c8c3fbbfa1f9fb92.png",
     title: "Beluchting: zuurstof en beweging in water",
     intro:
       "Stilstaand water gaat achteruit: bacteriën sterven af, het water begint te stinken en er ontstaat algengroei. Door continu lucht in het water te brengen, blijft het in beweging, blijft er zuurstof beschikbaar en blijft de waterkwaliteit op peil.",
@@ -60,6 +63,7 @@ export const applicationPages = {
     products: ["beluchters", "zijkanaalventilatoren", "turbo-blowers"],
   },
   "vacuum-heffen": {
+    image: "5873de83a46d51bf.jpeg",
     title: "Vacuümheffen: zware en onhandelbare lasten veilig verplaatsen",
     intro:
       "Een aanrechtblad, glazen ruit, stalen plaat of stapel dozen: sommige lasten zijn te zwaar, te groot of te kwetsbaar om met de hand te tillen. Met zuignappen en onderdruk wordt de last vastgezogen, opgetild en op de gewenste plek neergezet.",
@@ -86,40 +90,48 @@ export const industries = [
     "voeding-en-dranken",
     "Voeding en dranken",
     "Vacuüm- en blowertechniek voor verpakken, drogen, transporteren en hygiënekritische processen.",
+    "ce738e750d53cff8.png",
   ],
   [
     "verpakkingsindustrie",
     "Verpakkingsindustrie",
     "Betrouwbare vacuümtechniek voor constante cyclustijden en een stabiele verpakkingskwaliteit.",
+    "ccc91a7b042135c9.jpg",
   ],
   [
     "zwembad-en-wellness",
     "Zwembad en wellness",
     "Blowertechniek voor bubbels, circulatie en waterbeweging in zwembaden, jacuzzi's en wellnessinstallaties.",
+    "4b5b4fb2655f7387.png",
   ],
   [
     "machinebouw-en-oem",
     "Machinebouw en OEM",
     "Een passende vacuüm- of bloweroplossing voor nieuwe machines en bestaande installaties.",
+    "46b94e53374af23f.jpg",
   ],
   [
     "farmaceutische-en-medische-industrie",
     "Farmaceutische en medische industrie",
     "Proceszekere techniek wanneer productzuiverheid, betrouwbaarheid en reproduceerbaarheid tellen.",
+    "ce31093fb614b4ae.jpg",
   ],
   [
     "afvalverwerking",
     "Afvalverwerking",
     "Blowers en vacuümtechniek voor onder meer luchttransport, beluchting en procesondersteuning.",
+    "f1fe1677d64ec3cd.jpg",
   ],
   [
     "tuinbouw-en-landbouw",
     "Tuinbouw en landbouw",
     "Beluchting en luchttechniek voor bassinwater, gewassen en bedrijfsprocessen.",
+    "1132244f0486054d.jpg",
   ],
   [
     "waterzuivering-en-milieu",
     "Waterzuivering en milieu",
     "Gerichte luchttoevoer voor biologische processen, circulatie en een stabiele waterkwaliteit.",
+    "e89bf7f5895c509f.jpg",
   ],
 ];

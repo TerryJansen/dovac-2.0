@@ -15,7 +15,7 @@ import {
   Plus,
   CheckCircle,
 } from "@phosphor-icons/react";
-import { products, faqs, url, asset } from "./site-data";
+import { products, faqs, url, originalAsset } from "./site-data";
 import { applicationPages, industries } from "./source-content";
 import { ProductExplorer, ProductDetail } from "./products";
 import ContactForm from "./contact-form";
@@ -62,6 +62,9 @@ function ArticlePage({ article, ui }) {
       <PageTitle label="Toepassingen" description={article.intro}>
         {article.title}
       </PageTitle>
+      <div className="wrap source-page-image">
+        <img src={originalAsset(article.image)} alt="" />
+      </div>
       <section className="wrap source-article">
         {article.sections.map(([title, text], index) => (
           <Reveal
@@ -104,6 +107,7 @@ function ApplicationsPage({ ui }) {
       <section className="wrap source-card-grid">
         {Object.entries(applicationPages).map(([slug, article], index) => (
           <Reveal key={slug} className="source-card" delay={index * 0.05}>
+            <img src={originalAsset(article.image)} alt="" loading="lazy" />
             <p className="eyebrow">Toepassing</p>
             <h2>{article.title}</h2>
             <p>{article.intro}</p>
@@ -122,7 +126,7 @@ function IndustriesPage({ page, ui }) {
   const { Reveal, PageTitle, ContactBand } = ui;
   const industry = industries.find(([slug]) => page === `industrieen/${slug}`);
   if (industry) {
-    const [, title, description] = industry;
+    const [, title, description, image] = industry;
     return (
       <>
         <div className="wrap breadcrumbs">
@@ -133,6 +137,9 @@ function IndustriesPage({ page, ui }) {
         <PageTitle label="Industrieën" description={description}>
           {title}
         </PageTitle>
+        <div className="wrap source-page-image">
+          <img src={originalAsset(image)} alt="" />
+        </div>
         <section className="wrap industry-focus">
           <Reveal>
             <h2>Techniek begint bij uw proces.</h2>
@@ -161,8 +168,9 @@ function IndustriesPage({ page, ui }) {
         Kennis van techniek. Oog voor uw industrie.
       </PageTitle>
       <section className="wrap source-card-grid industry-grid">
-        {industries.map(([slug, title, description], index) => (
+        {industries.map(([slug, title, description, image], index) => (
           <Reveal key={slug} className="source-card" delay={index * 0.04}>
+            <img src={originalAsset(image)} alt="" loading="lazy" />
             <p className="eyebrow">Industrie</p>
             <h2>{title}</h2>
             <p>{description}</p>
@@ -211,7 +219,7 @@ export default function InnerPage({ page, ui }) {
         </PageTitle>
         <section className="wrap service-banner">
           <img
-            src={asset("maintenance")}
+            src={originalAsset("349d77612df50334.jpg")}
             alt="Onderhoud aan de rotor van een vacuümpomp"
             width="941"
             height="659"
@@ -267,7 +275,7 @@ export default function InnerPage({ page, ui }) {
         <section className="wrap service-detail">
           <Reveal>
             <img
-              src={asset("workshop")}
+              src={originalAsset("08682a32485e7ef2.jpg")}
               width="480"
               height="801"
               loading="lazy"
@@ -399,7 +407,7 @@ export default function InnerPage({ page, ui }) {
         <section className="wrap company-story">
           <Reveal className="company-photo">
             <img
-              src={asset("building")}
+              src={originalAsset("7ef641b23b81fed5.jpg")}
               alt="Het DOVAC-bedrijfspand met zonnepanelen in Zevenhuizen"
               width="941"
               height="801"
@@ -520,7 +528,7 @@ export default function InnerPage({ page, ui }) {
               </span>
             </div>
             <img
-              src={asset("building")}
+              src={originalAsset("7ef641b23b81fed5.jpg")}
               width="941"
               height="801"
               alt="DOVAC in Zevenhuizen"

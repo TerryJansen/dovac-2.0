@@ -11,7 +11,7 @@ import {
   CirclesFour,
   Wrench,
 } from "@phosphor-icons/react";
-import { products, url, asset } from "./site-data";
+import { products, url, originalAsset } from "./site-data";
 
 const icons = {
   vacuum: Waveform,
@@ -73,7 +73,7 @@ export function ProductExplorer({ ui }) {
               <a href={url(`producten/${p.slug}`)}>
                 <div className="product-visual">
                   <img
-                    src={asset(`products/${p.slug}`)}
+                    src={originalAsset(p.image)}
                     alt={`${p.name} voor industriële toepassingen`}
                     width="960"
                     height="720"
@@ -131,20 +131,27 @@ export function ProductNavigator({ ui }) {
     },
   ];
   return (
-    <section className="product-navigator" aria-label="Productgroepen verkennen">
+    <section
+      className="product-navigator"
+      aria-label="Productgroepen verkennen"
+    >
       <div className="wrap">
         <div className="product-navigator-head">
-        <div>
+          <div>
             <p className="eyebrow">Ons assortiment</p>
             <h2>Vind direct de juiste techniek.</h2>
-        </div>
+          </div>
           <a className="text-link" href={url("producten")}>
             Bekijk alle productgroepen <ArrowRight size={20} />
           </a>
         </div>
         <div className="product-navigator-grid">
           {groups.map((group, index) => (
-            <Reveal key={group.name} className="product-navigator-card" delay={index * 0.06}>
+            <Reveal
+              key={group.name}
+              className="product-navigator-card"
+              delay={index * 0.06}
+            >
               <h3>{group.name}</h3>
               <p>{group.description}</p>
               <ul>
@@ -196,7 +203,7 @@ export function ProductDetail({ product: p, ui }) {
         </Reveal>
         <Reveal className="product-consult">
           <img
-            src={asset(`products/${p.slug}`)}
+            src={originalAsset(p.image)}
             alt={`${p.name} voor industriële toepassingen`}
             width="960"
             height="720"
@@ -218,7 +225,7 @@ export function ProductDetail({ product: p, ui }) {
       </section>
       <section className="wrap product-service">
         <img
-          src={asset("maintenance")}
+          src={originalAsset("1f7e68e87940984c.jpg")}
           alt="DOVAC voert onderhoud uit aan een vacuümpomp"
           width="941"
           height="659"

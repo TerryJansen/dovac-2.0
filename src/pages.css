@@ -405,6 +405,18 @@
 .empty-page {
   padding-block: 10px 100px;
 }
+.source-page-image {
+  margin-bottom: 52px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--panel);
+}
+.source-page-image img {
+  display: block;
+  width: 100%;
+  height: clamp(240px, 34vw, 480px);
+  object-fit: cover;
+}
 .source-card-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -423,6 +435,13 @@
 }
 .source-card:nth-child(4n + 2) {
   background: var(--panel);
+}
+.source-card > img {
+  width: calc(100% + 68px);
+  height: 190px;
+  margin: -34px -34px 26px;
+  border-radius: 19px 19px 0 0;
+  object-fit: cover;
 }
 .source-card h2 {
   font-size: clamp(26px, 2.4vw, 36px);
@@ -736,6 +755,14 @@
   .source-card {
     min-height: 0;
     padding: 27px;
+  }
+  .source-page-image {
+    margin-bottom: 35px;
+  }
+  .source-card > img {
+    width: calc(100% + 54px);
+    height: 180px;
+    margin: -27px -27px 22px;
   }
   .source-article {
     padding-bottom: 35px;

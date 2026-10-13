@@ -1,6 +1,7 @@
 export const base = import.meta.env.BASE_URL;
 export const url = (path = "home") => `${base}nl/${path}/`;
 export const asset = (name) => `${base}images/${name}.webp`;
+export const originalAsset = (name) => `${base}images/dovac-originals/${name}`;
 export const routes = [
   ["Producten", "producten"],
   ["Onderhoud & Reparaties", "onderhoud-reparaties/onderhoud-en-reparaties"],
@@ -17,6 +18,7 @@ export const products = [
     name: "Vacuümpompen",
     group: "Vacuüm",
     icon: "vacuum",
+    image: "fe6c7287d78f4143.png",
     intro: "Het juiste vacuüm begint bij uw proces.",
     description:
       "Voor het afzuigen van lucht en het creëren van onderdruk. Samen bepalen we welke pomp bij uw toepassing past.",
@@ -32,6 +34,7 @@ export const products = [
     name: "Draaischuifpompen",
     group: "Vacuüm",
     icon: "rotor",
+    image: "14438d7c8a393da3.png",
     intro: "Bewezen techniek. Zorgvuldig geselecteerd.",
     description:
       "Een vertrouwde pomptechniek voor uiteenlopende vacuümtoepassingen. DOVAC helpt bij de selectie en het onderhoud.",
@@ -47,6 +50,7 @@ export const products = [
     name: "Zijkanaalventilatoren",
     group: "Lucht",
     icon: "fan",
+    image: "411cfc11ff40341a.jpg",
     intro: "Lucht verplaatsen. Gericht op uw proces.",
     description:
       "Voor toepassingen met onderdruk of overdruk. Kies met ons de uitvoering die aansluit op uw luchtbehoefte.",
@@ -62,6 +66,7 @@ export const products = [
     name: "Turbo Blowers",
     group: "Lucht",
     icon: "wind",
+    image: "69b30a172b715cad.png",
     intro: "De luchtstroom die uw toepassing vraagt.",
     description:
       "Blowertechniek voor processen die een gerichte luchtstroom vragen. We helpen u de juiste keuze te maken.",
@@ -77,6 +82,7 @@ export const products = [
     name: "Beluchters",
     group: "Lucht",
     icon: "air",
+    image: "50ca684155230b04.png",
     intro: "Zuurstof en beweging in ieder bassin.",
     description:
       "Voor water waarin zuurstof, circulatie en een stabiele kwaliteit essentieel zijn. De installatie wordt berekend op uw bassin en proces.",
@@ -92,6 +98,7 @@ export const products = [
     name: "Luchtmessen",
     group: "Lucht",
     icon: "air",
+    image: "71ece1274c9efbfc.jpg",
     intro: "Gerichte lucht. Precies waar het nodig is.",
     description:
       "Voor het gericht afblazen en drogen van oppervlakken. Afgestemd op uw product en de snelheid van uw proces.",
@@ -107,6 +114,7 @@ export const products = [
     name: "Systems",
     group: "Systemen & onderdelen",
     icon: "system",
+    image: "8a4b9cfa223b15c9.png",
     intro: "Van losse component naar één oplossing.",
     description:
       "Een vacuüm- of blowerinstallatie die als geheel werkt. Van technische vraag tot assemblage en testen.",
@@ -122,6 +130,7 @@ export const products = [
     name: "Vacuümsystemen",
     group: "Systemen & onderdelen",
     icon: "system",
+    image: "8a4b9cfa223b15c9.png",
     intro: "Eén centrale oplossing voor meerdere afnamepunten.",
     description:
       "Complete vacuümsystemen met pompen, vat en regeling, afgestemd op capaciteit, continuïteit en energieverbruik.",
@@ -137,6 +146,7 @@ export const products = [
     name: "Spare parts",
     group: "Systemen & onderdelen",
     icon: "parts",
+    image: "0711ad68a3427eb0.jpg",
     intro: "Het juiste onderdeel. Weer vooruit.",
     description:
       "Onderdelen, filters en vacuümpompolie voor onderhoud en reparatie. Deel uw merk en type voor gericht advies.",

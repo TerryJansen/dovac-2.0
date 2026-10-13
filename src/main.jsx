@@ -25,7 +25,7 @@ import "./interactions.css";
 import InnerPage from "./pages";
 import { ProductNavigator } from "./products";
 import RequestModal from "./request-modal";
-import { url, asset, routes, base } from "./site-data";
+import { url, asset, originalAsset, routes, base } from "./site-data";
 
 export function Reveal({ children, className = "", delay = 0 }) {
   const reduce = useReducedMotion();
@@ -349,7 +349,7 @@ function Home({ onRequest }) {
         <Reveal className="hero-visual" delay={0.12}>
           <div className="image-frame">
             <img
-              src={asset("maintenance")}
+              src={originalAsset("1f7e68e87940984c.jpg")}
               alt="DOVAC-monteur werkt zorgvuldig aan een vacuümpomp"
               width="941"
               height="659"
@@ -448,7 +448,7 @@ function Home({ onRequest }) {
         <div className="wrap service-grid">
           <Reveal className="service-image">
             <img
-              src={asset("workshop")}
+              src={originalAsset("2a7cea9538ceccd9.jpg")}
               alt="Een DOVAC-specialist voert onderhoud uit in de werkplaats"
               width="480"
               height="801"
@@ -505,7 +505,7 @@ function Home({ onRequest }) {
         </Reveal>
         <Reveal className="wide-image">
           <img
-            src={asset("warehouse")}
+            src={originalAsset("7ef641b23b81fed5.jpg")}
             alt="Het DOVAC-magazijn met onderdelen en pompen op voorraad"
             width="1600"
             height="221"
