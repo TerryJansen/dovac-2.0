@@ -24,6 +24,7 @@ import "./styles.css";
 import "./interactions.css";
 import InnerPage from "./pages";
 import { ProductNavigator } from "./products";
+import RequestModal from "./request-modal";
 import { url, asset, routes, base } from "./site-data";
 
 export function Reveal({ children, className = "", delay = 0 }) {
@@ -80,14 +81,14 @@ function Header() {
   }, [theme]);
   useEffect(() => {
     const key = (e) => {
-      if (e.key === "Escape") {
+      if (e.key === "Escape" && open) {
         setOpen(false);
         document.querySelector(".menu-toggle")?.focus();
       }
     };
     document.addEventListener("keydown", key);
     return () => document.removeEventListener("keydown", key);
-  }, []);
+  }, [open]);
   const isDark =
     theme === "dark" ||
     (theme === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
@@ -248,7 +249,7 @@ function Footer() {
     </footer>
   );
 }
-function Home() {
+function Home({ onRequest }) {
   const reduce = useReducedMotion();
   return (
     <>
@@ -288,13 +289,20 @@ function Home() {
               proces in beweging.
             </p>
             <div className="hero-buttons">
-              <Button href={url("producten")}>Ontdek producten</Button>
-              <a
-                className="text-link"
-                href={url("onderhoud-reparaties/onderhoud-en-reparaties")}
+              <button
+                className="button"
+                type="button"
+                onClick={() => onRequest("quote")}
               >
-                Onderhoud & reparaties <ArrowRight size={20} />
-              </a>
+                Offerte aanvragen <ArrowUpRight size={20} aria-hidden="true" />
+              </button>
+              <button
+                className="button secondary"
+                type="button"
+                onClick={() => onRequest("appointment")}
+              >
+                Afspraak maken <ArrowRight size={20} aria-hidden="true" />
+              </button>
             </div>
           </Reveal>
         </div>
@@ -470,6 +478,7 @@ function Home() {
   );
 }
 function App() {
+  const [requestMode, setRequestMode] = useState(null);
   const relative = location.pathname.startsWith(base)
     ? location.pathname.slice(base.length)
     : location.pathname.slice(1);
@@ -483,7 +492,7 @@ function App() {
       <Header />
       <main id="main">
         {page === "home" ? (
-          <Home />
+          <Home onRequest={setRequestMode} />
         ) : (
           <InnerPage
             page={page}
@@ -492,6 +501,9 @@ function App() {
         )}
       </main>
       <Footer />
+      {requestMode && (
+        <RequestModal mode={requestMode} onClose={() => setRequestMode(null)} />
+      )}
     </>
   );
 }

@@ -151,7 +151,7 @@ test("unknown route shows recovery and real motion is present", async ({
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("./");
   await expect(
-    page.getByRole("link", { name: "Ontdek producten", exact: true }),
+    page.getByRole("button", { name: "Offerte aanvragen", exact: true }),
   ).toBeVisible();
   await page.waitForTimeout(1000);
   expect(
