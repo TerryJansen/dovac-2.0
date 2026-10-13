@@ -26,25 +26,39 @@ test("primary navigation opens distinct, directly addressable pages", async ({
   }
 });
 
-test("industry detail places a square image beside its copy", async ({
+test("every industry detail places a square image beside its copy", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("./nl/industrieen/waterzuivering-en-milieu/");
-  const layout = await page.locator(".industry-layout").evaluate((element) => {
-    const image = element
-      .querySelector(".industry-image")
-      .getBoundingClientRect();
-    const copy = element
-      .querySelector(".industry-focus")
-      .getBoundingClientRect();
-    return {
-      imageHeight: image.height,
-      imageWidth: image.width,
-      imageX: image.x,
-      copyX: copy.x,
-    };
-  });
-  expect(layout.imageHeight).toBeCloseTo(layout.imageWidth, 0);
-  expect(layout.imageX).toBeGreaterThan(layout.copyX);
+  const industries = [
+    "voeding-en-dranken",
+    "verpakkingsindustrie",
+    "zwembad-en-wellness",
+    "machinebouw-en-oem",
+    "farmaceutische-en-medische-industrie",
+    "afvalverwerking",
+    "tuinbouw-en-landbouw",
+    "waterzuivering-en-milieu",
+  ];
+  for (const industry of industries) {
+    await page.goto(`./nl/industrieen/${industry}/`);
+    const layout = await page
+      .locator(".industry-layout")
+      .evaluate((element) => {
+        const image = element
+          .querySelector(".industry-image")
+          .getBoundingClientRect();
+        const copy = element
+          .querySelector(".industry-focus")
+          .getBoundingClientRect();
+        return {
+          imageHeight: image.height,
+          imageWidth: image.width,
+          imageX: image.x,
+          copyX: copy.x,
+        };
+      });
+    expect(layout.imageHeight, industry).toBeCloseTo(layout.imageWidth, 0);
+    expect(layout.imageX, industry).toBeGreaterThan(layout.copyX);
+  }
 });
