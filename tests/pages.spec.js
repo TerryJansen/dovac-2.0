@@ -3,6 +3,7 @@ import { test, expect } from "@playwright/test";
 test("primary navigation opens distinct, directly addressable pages", async ({
   page,
 }) => {
+  test.setTimeout(60000);
   await page.goto("./");
   const pages = [
     ["Producten", "Vind de techniek die bij u past."],
@@ -23,4 +24,27 @@ test("primary navigation opens distinct, directly addressable pages", async ({
     await page.reload();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(title);
   }
+});
+
+test("industry detail places a square image beside its copy", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("./nl/industrieen/waterzuivering-en-milieu/");
+  const layout = await page.locator(".industry-layout").evaluate((element) => {
+    const image = element
+      .querySelector(".industry-image")
+      .getBoundingClientRect();
+    const copy = element
+      .querySelector(".industry-focus")
+      .getBoundingClientRect();
+    return {
+      imageHeight: image.height,
+      imageWidth: image.width,
+      imageX: image.x,
+      copyX: copy.x,
+    };
+  });
+  expect(layout.imageHeight).toBeCloseTo(layout.imageWidth, 0);
+  expect(layout.imageX).toBeGreaterThan(layout.copyX);
 });

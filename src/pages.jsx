@@ -137,23 +137,25 @@ function IndustriesPage({ page, ui }) {
         <PageTitle label="Industrieën" description={description}>
           {title}
         </PageTitle>
-        <div className="wrap source-page-image">
-          <img src={originalAsset(image)} alt="" />
-        </div>
-        <section className="wrap industry-focus">
-          <Reveal>
-            <h2>Techniek begint bij uw proces.</h2>
-            <p>{description}</p>
-            <p>
-              DOVAC kijkt naar de toepassing, benodigde capaciteit, druk,
-              bedrijfsomstandigheden en gewenste continuïteit. Zo ontstaat een
-              oplossing die past bij het proces in plaats van alleen bij een
-              bestaand typenummer.
-            </p>
-            <a className="text-link" href={url("contact")}>
-              Bespreek uw toepassing <ArrowUpRight size={20} />
-            </a>
-          </Reveal>
+        <section className="wrap industry-layout">
+          <div className="industry-focus">
+            <Reveal>
+              <h2>Techniek begint bij uw proces.</h2>
+              <p>{description}</p>
+              <p>
+                DOVAC kijkt naar de toepassing, benodigde capaciteit, druk,
+                bedrijfsomstandigheden en gewenste continuïteit. Zo ontstaat een
+                oplossing die past bij het proces in plaats van alleen bij een
+                bestaand typenummer.
+              </p>
+              <a className="text-link" href={url("contact")}>
+                Bespreek uw toepassing <ArrowUpRight size={20} />
+              </a>
+            </Reveal>
+          </div>
+          <div className="industry-image">
+            <img src={originalAsset(image)} alt="" />
+          </div>
         </section>
         <ContactBand />
       </>
