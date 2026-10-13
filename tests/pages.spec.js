@@ -64,6 +64,7 @@ test("every industry detail places a square image beside its copy", async ({
 });
 
 test("industries overview offers custom-solution advice", async ({ page }) => {
+  await page.setViewportSize({ width: 640, height: 900 });
   await page.goto("./nl/industrieen/");
   await expect(
     page.getByRole("heading", { name: "Op zoek naar een oplossing op maat?" }),
@@ -71,4 +72,12 @@ test("industries overview offers custom-solution advice", async ({ page }) => {
   await expect(
     page.getByRole("link", { name: "Advies aanvragen" }),
   ).toHaveAttribute("href", /nl\/contact\/\?onderwerp=Advies%20op%20maat/);
+  const layout = await page.locator(".industry-advice").evaluate((element) => {
+    const copy = element.querySelector("p").getBoundingClientRect();
+    const button = element
+      .querySelector(".industry-advice-button")
+      .getBoundingClientRect();
+    return { buttonX: button.x, copyX: copy.x };
+  });
+  expect(layout.buttonX).toBeGreaterThan(layout.copyX);
 });
