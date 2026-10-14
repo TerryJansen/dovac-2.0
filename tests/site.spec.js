@@ -34,4 +34,8 @@ test("brand logo switches to the dark-theme variant", async ({ page }) => {
     "naturalWidth",
     260,
   );
+  await expect(page.locator(".logo").first()).toHaveCSS(
+    "background-color",
+    "rgb(17, 29, 39)",
+  );
 });

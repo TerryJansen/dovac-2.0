@@ -204,8 +204,8 @@ button {
   display: none;
 }
 :root[data-theme="dark"] .logo {
-  background: var(--surface-strong);
-  border: 1px solid var(--border);
+  background: var(--bg);
+  border: 1px solid transparent;
 }
 :root[data-theme="dark"] .brand-logo-light {
   display: none;
@@ -215,8 +215,8 @@ button {
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .logo {
-    background: var(--surface-strong);
-    border: 1px solid var(--border);
+    background: var(--bg);
+    border: 1px solid transparent;
   }
   :root:not([data-theme="light"]) .brand-logo-light {
     display: none;
