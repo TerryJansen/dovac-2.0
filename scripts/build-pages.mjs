@@ -25,6 +25,21 @@ const pages = {
   "veelgestelde-vragen": "Veelgestelde vragen",
   "over-ons": "Over DOVAC",
   blog: "Blog",
+  "blog/onderhoud-behoud": "Onderhoud = Behoud",
+  "blog/turbo-blowers-energiezuinige-blowertechnologie":
+    "Turbo Blowers voor industriële toepassingen",
+  "blog/verschil-industriele-vacuumpomp-conventionele-pomp":
+    "Industriële vacuümpompen versus conventionele pompen",
+  "blog/asco-vloeistofringpompen-geintegreerde-afscheider":
+    "ASCO vloeistofringpompen met geïntegreerde afscheider",
+  "blog/vacuumpompen-en-voedselveiligheid": "Vacuümpompen en voedselveiligheid",
+  "blog/luchtmessen-vs-traditionele-droogmethoden":
+    "Drogen met luchtmessen versus traditionele droogmethoden",
+  "blog/vacuumpompen-in-de-farmaceutische-industrie-efficientie-veiligheid-en-innovatie":
+    "Vacuümpompen in de farmaceutische industrie",
+  "blog/vacuumsystemen-op-maat": "Vacuümsystemen op maat",
+  "blog/zijkanaalventilatoren-hygiene-agrarisch-voedingsindustrie":
+    "Zijkanaalventilatoren voor hygiëne en efficiëntie",
   nieuws: "Nieuws",
   contact: "Contact",
   "producten/vacuumpompen": "Vacuümpompen",

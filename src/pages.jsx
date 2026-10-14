@@ -123,6 +123,37 @@ function ApplicationsPage({ ui }) {
   );
 }
 
+function BlogArticlePage({ article, ui }) {
+  const { Reveal, PageTitle, ContactBand } = ui;
+  return (
+    <>
+      <div className="wrap breadcrumbs">
+        <a href={url("blog")}>Blog</a>
+        <span>/</span>
+        <span>{article.title}</span>
+      </div>
+      <PageTitle label="Blog" description={article.excerpt}>
+        {article.title}
+      </PageTitle>
+      <article className="wrap blog-article">
+        <Reveal className="blog-article-image">
+          <img src={originalAsset(article.image)} alt="" />
+        </Reveal>
+        <Reveal className="blog-article-copy">
+          <p className="insight-meta">
+            {article.date} <span>{article.readTime}</span>
+          </p>
+          <p>{article.excerpt}</p>
+          <a className="text-link" href={url("contact")}>
+            Bespreek uw toepassing <ArrowUpRight size={20} />
+          </a>
+        </Reveal>
+      </article>
+      <ContactBand />
+    </>
+  );
+}
+
 function InsightsPage({ page, ui }) {
   const { Reveal, PageTitle, ContactBand } = ui;
   const content = knowledgeContent[page];
@@ -153,7 +184,7 @@ function InsightsPage({ page, ui }) {
                 </p>
                 <h2>{item.title}</h2>
                 <p>{item.excerpt}</p>
-                {item.source && (
+                {item.slug && (
                   <span className="text-link">
                     Lees artikel <ArrowUpRight size={20} aria-hidden="true" />
                   </span>
@@ -165,15 +196,9 @@ function InsightsPage({ page, ui }) {
             <Reveal
               className="insight-card"
               delay={index * 0.03}
-              key={item.source || item.vimeoId}
+              key={item.slug || item.vimeoId}
             >
-              {item.source ? (
-                <a href={item.source} target="_blank" rel="noreferrer">
-                  {card}
-                </a>
-              ) : (
-                card
-              )}
+              {item.slug ? <a href={url(`blog/${item.slug}`)}>{card}</a> : card}
             </Reveal>
           );
         })}
@@ -262,6 +287,10 @@ function IndustriesPage({ page, ui }) {
 }
 
 export default function InnerPage({ page, ui }) {
+  const blogArticle = knowledgeContent.blog.items.find(
+    (item) => page === `blog/${item.slug}`,
+  );
+  if (blogArticle) return <BlogArticlePage article={blogArticle} ui={ui} />;
   if (page === "blog" || page === "nieuws")
     return <InsightsPage page={page} ui={ui} />;
   const { Reveal, Button, PageTitle, ContactBand } = ui;

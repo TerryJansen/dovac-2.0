@@ -56,7 +56,16 @@ test("blog and news show the recovered DOVAC source content", async ({
   ).toBeVisible();
   await expect(page.locator(".insight-card a").first()).toHaveAttribute(
     "href",
-    "https://dovac.nl/nl/kennis/blog/onderhoud-behoud/",
+    /\/nl\/blog\/onderhoud-behoud\/$/,
+  );
+  await page.locator(".insight-card a").first().click();
+  await expect(page).toHaveURL(/\/nl\/blog\/onderhoud-behoud\/$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Onderhoud = Behoud",
+  );
+  await page.reload();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Onderhoud = Behoud",
   );
   await page.goto("./nl/nieuws/");
   await expect(page.locator(".insight-card")).toHaveCount(1);
