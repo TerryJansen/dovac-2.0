@@ -438,6 +438,36 @@ function Home({ onRequest }) {
           </a>
         </div>
       </section>
+      <section className="product-motion-section">
+        <div className="wrap product-motion-layout">
+          <Reveal className="product-motion-copy">
+            <p className="eyebrow">3D weergave</p>
+            <h2>Bekijk de vacuümpomp van dichtbij.</h2>
+            <p id="product-motion-description">
+              Bekijk de vorm en bewegende onderdelen van de vacuümpomp in deze
+              korte 3D-demonstratie.
+            </p>
+            <a className="text-link" href={url("producten/vacuumpompen")}>
+              Bekijk vacuümpompen <ArrowRight size={20} aria-hidden="true" />
+            </a>
+          </Reveal>
+          <Reveal className="product-motion-video" delay={0.08}>
+            <video
+              src={`${base}videos/3d-vacuumpomp.mp4`}
+              poster={`${base}images/3d-vacuumpomp-poster.jpg`}
+              autoPlay={!reduce}
+              muted
+              loop
+              playsInline
+              controls
+              preload="metadata"
+              aria-describedby="product-motion-description"
+            >
+              Uw browser ondersteunt deze video niet.
+            </video>
+          </Reveal>
+        </div>
+      </section>
       <section className="section wrap">
         <Reveal>
           <h2>

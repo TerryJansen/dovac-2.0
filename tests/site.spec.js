@@ -21,6 +21,14 @@ test("homepage presents clear conversion actions", async ({ page }) => {
     "animation-name",
     "partner-loop",
   );
+  const video = page.locator(".product-motion-video video");
+  await expect(video).toHaveAttribute("src", /videos\/3d-vacuumpomp\.mp4$/);
+  await expect(video).toHaveAttribute(
+    "poster",
+    /images\/3d-vacuumpomp-poster\.jpg$/,
+  );
+  await expect(video).toHaveJSProperty("videoWidth", 704);
+  await expect(video).toHaveJSProperty("videoHeight", 576);
 });
 
 test("brand logo switches to the dark-theme variant", async ({ page }) => {
