@@ -110,9 +110,7 @@ export const knowledgeContent = {
         excerpt:
           "Voor het eerst stonden wij met een eigen stand op Empack, de vakbeurs voor verpakkingstechniek.",
         readTime: "Leestijd: 1 minuut",
-        image: "271ef7aab9963897.png",
-        source:
-          "https://dovac.nl/nl/over-ons/nieuws/dovac-op-empack-vacuum-en-blowertechniek-voor-iedere-industrie/",
+        vimeoId: "1216074268",
       },
     ],
   },

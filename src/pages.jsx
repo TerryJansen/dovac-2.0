@@ -132,27 +132,51 @@ function InsightsPage({ page, ui }) {
         {page === "nieuws" ? "Nieuws" : "Blog"}
       </PageTitle>
       <section className="wrap insights-grid">
-        {content.items.map((item, index) => (
-          <Reveal
-            className="insight-card"
-            delay={index * 0.03}
-            key={item.source}
-          >
-            <a href={item.source} target="_blank" rel="noreferrer">
-              <img src={originalAsset(item.image)} alt="" loading="lazy" />
+        {content.items.map((item, index) => {
+          const card = (
+            <>
+              {item.vimeoId ? (
+                <div className="insight-video">
+                  <iframe
+                    src={`https://player.vimeo.com/video/${item.vimeoId}?dnt=1&title=0&byline=0&portrait=0`}
+                    title="In gesprek met DOVAC - Empack 2026"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              ) : (
+                <img src={originalAsset(item.image)} alt="" loading="lazy" />
+              )}
               <div className="insight-card-copy">
                 <p className="insight-meta">
                   {item.date} <span>{item.readTime}</span>
                 </p>
                 <h2>{item.title}</h2>
                 <p>{item.excerpt}</p>
-                <span className="text-link">
-                  Lees artikel <ArrowUpRight size={20} aria-hidden="true" />
-                </span>
+                {item.source && (
+                  <span className="text-link">
+                    Lees artikel <ArrowUpRight size={20} aria-hidden="true" />
+                  </span>
+                )}
               </div>
-            </a>
-          </Reveal>
-        ))}
+            </>
+          );
+          return (
+            <Reveal
+              className="insight-card"
+              delay={index * 0.03}
+              key={item.source || item.vimeoId}
+            >
+              {item.source ? (
+                <a href={item.source} target="_blank" rel="noreferrer">
+                  {card}
+                </a>
+              ) : (
+                card
+              )}
+            </Reveal>
+          );
+        })}
       </section>
       <ContactBand />
     </>

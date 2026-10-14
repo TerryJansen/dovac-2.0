@@ -60,6 +60,11 @@ test("blog and news show the recovered DOVAC source content", async ({
   );
   await page.goto("./nl/nieuws/");
   await expect(page.locator(".insight-card")).toHaveCount(1);
+  await expect(page.locator(".insight-video iframe")).toHaveAttribute(
+    "src",
+    /player\.vimeo\.com\/video\/1216074268/,
+  );
+  await expect(page.locator(".insight-card a")).toHaveCount(0);
   await expect(
     page.getByRole("heading", {
       name: "DOVAC op Empack: vacuüm- en blowertechniek voor iedere industrie",
