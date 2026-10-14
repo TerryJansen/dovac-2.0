@@ -26,7 +26,8 @@ import "./interactions.css";
 import InnerPage from "./pages";
 import { ProductNavigator } from "./products";
 import RequestModal from "./request-modal";
-import { url, asset, originalAsset, routes, base } from "./site-data";
+import { url, asset, originalAsset, routesFor, base } from "./site-data";
+import { currentLocale, uiFor } from "./i18n";
 
 export function Reveal({ children, className = "", delay = 0 }) {
   const reduce = useReducedMotion();
@@ -87,6 +88,9 @@ function BrandLogo() {
   );
 }
 function Header() {
+  const locale = currentLocale();
+  const ui = uiFor(locale);
+  const routes = routesFor(ui);
   const [open, setOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [theme, setTheme] = useState(() => {
@@ -119,38 +123,56 @@ function Header() {
   return (
     <>
       <a className="skip" href="#main">
-        Ga naar inhoud
+        {ui.header.skipToContent}
       </a>
       <div className="utility">
         <div className="wrap">
           <span>
             <CheckCircle size={15} />
-            Technisch advies op maat
+            {ui.header.technicalAdvice}
           </span>
           <span>
             <CheckCircle size={15} />
-            24/7 bereikbaar
+            {ui.header.available247}
           </span>
           <span>
             <CheckCircle size={15} />
-            Snelle levering uit voorraad
+            {ui.header.fastDelivery}
           </span>
-          <span className="language">Nederlands</span>
+          <div className="language-switcher" aria-label="Language selector">
+            {["nl", "en", "de"].map((language) => (
+              <a
+                key={language}
+                href={url(
+                  location.pathname
+                    .replace(/^.*?\/(?:nl|en|de)\/?/, "")
+                    .replace(/\/$/, "") || "home",
+                  language,
+                )}
+                lang={language}
+                aria-current={locale === language ? "page" : undefined}
+              >
+                {language.toUpperCase()}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
       <header className="site-header">
         <div className="wrap nav-wrap">
-          <a className="logo" href={url()} aria-label="DOVAC home">
+          <a className="logo" href={url()} aria-label={ui.header.homeAriaLabel}>
             <BrandLogo />
           </a>
           <nav
             id="navigation"
             className={open ? "open" : ""}
-            aria-label="Hoofdnavigatie"
+            aria-label={ui.header.primaryNavigation}
           >
             {routes.map(([text, path]) => {
               const isAbout = path === "over-ons";
-              const isCurrent = location.pathname.includes(`/nl/${path}/`);
+              const isCurrent = location.pathname.includes(
+                `/${locale}/${path}/`,
+              );
               if (!isAbout)
                 return (
                   <a
@@ -164,7 +186,7 @@ function Header() {
               const isAboutSection =
                 isCurrent ||
                 ["blog", "nieuws"].some((item) =>
-                  location.pathname.includes(`/nl/${item}/`),
+                  location.pathname.includes(`/${locale}/${item}/`),
                 );
               return (
                 <div
@@ -181,7 +203,7 @@ function Header() {
                   <button
                     type="button"
                     className="nav-submenu-toggle"
-                    aria-label="Open menu Over ons"
+                    aria-label={ui.header.openAboutMenu}
                     aria-expanded={aboutOpen}
                     aria-controls="about-submenu"
                     onClick={() => setAboutOpen((value) => !value)}
@@ -189,8 +211,8 @@ function Header() {
                     <CaretDown size={15} aria-hidden="true" />
                   </button>
                   <div className="nav-submenu" id="about-submenu">
-                    <a href={url("blog")}>Blog</a>
-                    <a href={url("nieuws")}>Nieuws</a>
+                    <a href={url("blog")}>{ui.header.blog}</a>
+                    <a href={url("nieuws")}>{ui.header.news}</a>
                   </div>
                 </div>
               );
@@ -200,21 +222,21 @@ function Header() {
             <a
               className="phone"
               href="tel:+31252423363"
-              aria-label="Bel DOVAC op 0252 42 33 63"
+              aria-label={ui.header.callDovac}
             >
               <Phone size={19} />
               <span>0252 42 33 63</span>
             </a>
             <button
               className="icon-button theme"
-              aria-label={isDark ? "Licht thema" : "Donker thema"}
+              aria-label={isDark ? ui.header.lightTheme : ui.header.darkTheme}
               onClick={() => setTheme(isDark ? "light" : "dark")}
             >
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             <button
               className="icon-button menu-toggle"
-              aria-label={open ? "Menu sluiten" : "Menu openen"}
+              aria-label={open ? ui.header.closeMenu : ui.header.openMenu}
               aria-controls="navigation"
               aria-expanded={open}
               onClick={() => setOpen(!open)}
@@ -289,21 +311,19 @@ function Partners() {
   );
 }
 function Footer() {
+  const ui = uiFor();
+  const routes = routesFor(ui);
   return (
     <footer className="footer">
       <div className="wrap footer-grid">
         <div>
-          <a className="logo" href={url()} aria-label="DOVAC home">
+          <a className="logo" href={url()} aria-label={ui.header.homeAriaLabel}>
             <BrandLogo />
           </a>
-          <p>
-            De kracht achter
-            <br />
-            uw lucht- en vacuümtechniek.
-          </p>
+          <p>{ui.footer.tagline}</p>
         </div>
         <div>
-          <h3>Ontdek DOVAC</h3>
+          <h3>{ui.footer.discover}</h3>
           {routes.slice(0, 3).map(([t, p]) => (
             <a key={p} href={url(p)}>
               {t}
@@ -311,17 +331,17 @@ function Footer() {
           ))}
         </div>
         <div>
-          <h3>Goed om te weten</h3>
+          <h3>{ui.footer.goodToKnow}</h3>
           {routes.slice(3).map(([t, p]) => (
             <a key={p} href={url(p)}>
               {t}
             </a>
           ))}
-          <a href={url("blog")}>Blog</a>
-          <a href={url("nieuws")}>Nieuws</a>
+          <a href={url("blog")}>{ui.header.blog}</a>
+          <a href={url("nieuws")}>{ui.header.news}</a>
         </div>
         <div>
-          <h3>Kom in contact</h3>
+          <h3>{ui.footer.getInTouch}</h3>
           <a href="mailto:info@dovac.nl">
             info@dovac.nl <ArrowUpRight size={16} />
           </a>
@@ -334,11 +354,8 @@ function Footer() {
         </div>
       </div>
       <div className="wrap footer-bottom">
-        <span>DOVAC. Blower- en vacuümtechniek.</span>
-        <span>Ontwerpconcept · Niet de officiële website</span>
-        <a href="https://dovac.nl/nl/home/" target="_blank" rel="noreferrer">
-          Bestaande website <ArrowUpRight size={15} />
-        </a>
+        <span>{ui.footer.companyLine}</span>
+        <span>{ui.footer.designConcept}</span>
       </div>
     </footer>
   );

@@ -15,11 +15,12 @@ import {
   Plus,
   CheckCircle,
 } from "@phosphor-icons/react";
-import { products, faqs, url, originalAsset } from "./site-data";
+import { url, originalAsset } from "./site-data";
 import { applicationPages, industries } from "./source-content";
 import { knowledgeContent } from "./knowledge-content";
 import { ProductExplorer, ProductDetail } from "./products";
 import ContactForm from "./contact-form";
+import { contentFor, currentLocale } from "./i18n";
 import "./pages.css";
 
 const icons = {
@@ -37,6 +38,7 @@ export function ProductIcon({ type, size = 58 }) {
 }
 
 function SourceLinks({ slugs }) {
+  const { products } = contentFor();
   return (
     <div className="source-product-links">
       {slugs.map((slug) => {
@@ -154,16 +156,16 @@ function BlogArticlePage({ article, ui }) {
   );
 }
 
-function InsightsPage({ page, ui }) {
+function InsightsPage({ page, ui, content = knowledgeContent }) {
   const { Reveal, PageTitle, ContactBand } = ui;
-  const content = knowledgeContent[page];
+  const pageContent = content[page];
   return (
     <>
-      <PageTitle label="Over DOVAC" description={content.description}>
+      <PageTitle label="Over DOVAC" description={pageContent.description}>
         {page === "nieuws" ? "Nieuws" : "Blog"}
       </PageTitle>
       <section className="wrap insights-grid">
-        {content.items.map((item, index) => {
+        {pageContent.items.map((item, index) => {
           const card = (
             <>
               {item.vimeoId ? (
@@ -287,12 +289,15 @@ function IndustriesPage({ page, ui }) {
 }
 
 export default function InnerPage({ page, ui }) {
+  const locale = currentLocale();
+  const { products, faqs, applicationPages, industries, knowledgeContent } =
+    contentFor(locale);
   const blogArticle = knowledgeContent.blog.items.find(
     (item) => page === `blog/${item.slug}`,
   );
   if (blogArticle) return <BlogArticlePage article={blogArticle} ui={ui} />;
   if (page === "blog" || page === "nieuws")
-    return <InsightsPage page={page} ui={ui} />;
+    return <InsightsPage page={page} ui={ui} content={knowledgeContent} />;
   const { Reveal, Button, PageTitle, ContactBand } = ui;
   const product = products.find((p) => page === `producten/${p.slug}`);
   if (product) return <ProductDetail product={product} ui={ui} />;

@@ -166,8 +166,22 @@ button {
 .utility svg {
   color: var(--accent);
 }
-.utility .language {
+.language-switcher {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.language-switcher a {
+  color: var(--muted);
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+.language-switcher a[aria-current="page"] {
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
 }
 .site-header {
   position: sticky;

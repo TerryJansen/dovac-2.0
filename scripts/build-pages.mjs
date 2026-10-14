@@ -52,16 +52,18 @@ const pages = {
   "producten/vacuumsystemen": "Vacuümsystemen",
   "producten/spare-parts": "Spare parts",
 };
-for (const [path, title] of Object.entries(pages)) {
-  const folder = `dist/nl/${path}`;
-  await mkdir(folder, { recursive: true });
-  await writeFile(
-    `${folder}/index.html`,
-    html.replace(
-      /<title>.*?<\/title>/,
-      `<title>${title.replaceAll("&", "&amp;")} | DOVAC</title>`,
-    ),
-  );
+for (const locale of ["nl", "en", "de"]) {
+  for (const [path, title] of Object.entries(pages)) {
+    const folder = `dist/${locale}/${path}`;
+    await mkdir(folder, { recursive: true });
+    await writeFile(
+      `${folder}/index.html`,
+      html.replace(
+        /<title>.*?<\/title>/,
+        `<title>${title.replaceAll("&", "&amp;")} | DOVAC</title>`,
+      ),
+    );
+  }
 }
 await writeFile(
   "dist/404.html",

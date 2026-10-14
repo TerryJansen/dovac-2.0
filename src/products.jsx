@@ -11,7 +11,8 @@ import {
   CirclesFour,
   Wrench,
 } from "@phosphor-icons/react";
-import { products, url, originalAsset } from "./site-data";
+import { url, originalAsset } from "./site-data";
+import { contentFor, currentLocale, localize, uiFor } from "./i18n";
 
 const icons = {
   vacuum: Waveform,
@@ -28,20 +29,26 @@ function ProductIcon({ type, size = 80 }) {
 }
 export function ProductExplorer({ ui }) {
   const { Reveal } = ui;
-  const [group, setGroup] = useState("Alles");
+  const locale = currentLocale();
+  const copy = uiFor(locale).products;
+  const { products } = contentFor(locale);
+  const [group, setGroup] = useState(copy.groups.all);
   const [query, setQuery] = useState("");
   const result = products.filter(
     (p) =>
-      (group === "Alles" || p.group === group) &&
+      (group === copy.groups.all || p.group === group) &&
       `${p.name} ${p.description}`
-        .toLocaleLowerCase("nl")
-        .includes(query.trim().toLocaleLowerCase("nl")),
+        .toLocaleLowerCase(locale)
+        .includes(query.trim().toLocaleLowerCase(locale)),
   );
   return (
-    <section className="wrap product-section" aria-label="Productgroepen">
+    <section
+      className="wrap product-section"
+      aria-label={copy.explorerAriaLabel}
+    >
       <div className="product-toolbar">
-        <div className="filters" aria-label="Filter op productgroep">
-          {["Alles", "Vacuüm", "Lucht", "Systemen & onderdelen"].map((g) => (
+        <div className="filters" aria-label={copy.filterAriaLabel}>
+          {Object.values(copy.groups).map((g) => (
             <button
               key={g}
               aria-pressed={group === g}
@@ -52,19 +59,19 @@ export function ProductExplorer({ ui }) {
           ))}
         </div>
         <label className="product-search">
-          <span className="sr-only">Zoek een productgroep</span>
+          <span className="sr-only">{copy.searchLabel}</span>
           <MagnifyingGlass size={20} />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Zoek een productgroep"
+            placeholder={copy.searchPlaceholder}
             type="search"
           />
         </label>
       </div>
       <p className="result-count" role="status">
         {result.length}{" "}
-        {result.length === 1 ? "productgroep" : "productgroepen"}
+        {result.length === 1 ? copy.productGroup : copy.productGroups}
       </p>
       {result.length ? (
         <div className="product-grid">
@@ -74,7 +81,7 @@ export function ProductExplorer({ ui }) {
                 <div className="product-visual">
                   <img
                     src={originalAsset(p.image)}
-                    alt={`${p.name} voor industriële toepassingen`}
+                    alt={localize(copy.productImageAlt, { name: p.name })}
                     width="960"
                     height="720"
                     loading="lazy"
@@ -95,16 +102,16 @@ export function ProductExplorer({ ui }) {
       ) : (
         <div className="empty-results">
           <MagnifyingGlass size={42} />
-          <h2>Geen productgroepen gevonden.</h2>
-          <p>Probeer een andere zoekterm of bekijk het hele assortiment.</p>
+          <h2>{copy.noResultsTitle}</h2>
+          <p>{copy.noResultsDescription}</p>
           <button
             className="button"
             onClick={() => {
-              setGroup("Alles");
+              setGroup(copy.groups.all);
               setQuery("");
             }}
           >
-            Wis filters
+            {copy.clearFilters}
           </button>
         </div>
       )}
@@ -113,36 +120,33 @@ export function ProductExplorer({ ui }) {
 }
 export function ProductNavigator({ ui }) {
   const { Reveal } = ui;
+  const locale = currentLocale();
+  const copy = uiFor(locale).products;
+  const { products } = contentFor(locale);
   const groups = [
     {
-      name: "Vacuümtechniek",
-      description: "Voor creëren, vasthouden en regelen van vacuüm.",
-      items: products.filter((p) => p.group === "Vacuüm"),
+      ...copy.categories.vacuumTechnology,
+      items: products.filter((p) => p.group === copy.groups.vacuum),
     },
     {
-      name: "Blowertechniek",
-      description: "Voor luchttransport, beluchting en gerichte luchtstroom.",
-      items: products.filter((p) => p.group === "Lucht"),
+      ...copy.categories.blowerTechnology,
+      items: products.filter((p) => p.group === copy.groups.air),
     },
     {
-      name: "Systemen & onderdelen",
-      description: "Voor complete installaties en een passende vervanging.",
-      items: products.filter((p) => p.group === "Systemen & onderdelen"),
+      ...copy.categories.systemsAndParts,
+      items: products.filter((p) => p.group === copy.groups.systemsAndParts),
     },
   ];
   return (
-    <section
-      className="product-navigator"
-      aria-label="Productgroepen verkennen"
-    >
+    <section className="product-navigator" aria-label={copy.navigatorAriaLabel}>
       <div className="wrap">
         <div className="product-navigator-head">
           <div>
-            <p className="eyebrow">Ons assortiment</p>
-            <h2>Vind direct de juiste techniek.</h2>
+            <p className="eyebrow">{copy.navigatorEyebrow}</p>
+            <h2>{copy.navigatorTitle}</h2>
           </div>
           <a className="text-link" href={url("producten")}>
-            Bekijk alle productgroepen <ArrowRight size={20} />
+            {copy.viewAllProductGroups} <ArrowRight size={20} />
           </a>
         </div>
         <div className="product-navigator-grid">
@@ -172,10 +176,11 @@ export function ProductNavigator({ ui }) {
 }
 export function ProductDetail({ product: p, ui }) {
   const { Reveal, Button, PageTitle, ContactBand } = ui;
+  const copy = uiFor().products;
   return (
     <>
       <div className="wrap breadcrumbs">
-        <a href={url("producten")}>Producten</a>
+        <a href={url("producten")}>{copy.breadcrumbProducts}</a>
         <span>/</span>
         <span>{p.name}</span>
       </div>
@@ -186,7 +191,7 @@ export function ProductDetail({ product: p, ui }) {
         <Reveal className="product-detail-copy">
           <h2>{p.intro}</h2>
           <p>{p.why}</p>
-          <h3>Dit brengen we samen in kaart</h3>
+          <h3>{copy.assessmentTitle}</h3>
           <ul>
             {p.uses.map((item) => (
               <li key={item}>
@@ -198,13 +203,13 @@ export function ProductDetail({ product: p, ui }) {
           <Button
             href={url("contact") + `?onderwerp=${encodeURIComponent(p.name)}`}
           >
-            Bespreek uw vraag
+            {copy.discussQuestion}
           </Button>
         </Reveal>
         <Reveal className="product-consult">
           <img
             src={originalAsset(p.image)}
-            alt={`${p.name} voor industriële toepassingen`}
+            alt={localize(copy.productImageAlt, { name: p.name })}
             width="960"
             height="720"
             loading="lazy"

@@ -1,16 +1,24 @@
 export const base = import.meta.env.BASE_URL;
-export const url = (path = "home") => `${base}nl/${path}/`;
+export const localeFromPath = () => {
+  if (typeof location === "undefined") return "nl";
+  return location.pathname.match(/\/(nl|en|de)(?:\/|$)/)?.[1] || "nl";
+};
+export const url = (path = "home", locale = localeFromPath()) =>
+  `${base}${locale}/${path}/`;
 export const asset = (name) => `${base}images/${name}.webp`;
 export const originalAsset = (name) => `${base}images/dovac-originals/${name}`;
-export const routes = [
-  ["Producten", "producten"],
-  ["Onderhoud & Reparaties", "onderhoud-reparaties/onderhoud-en-reparaties"],
-  ["Datasheets", "datasheets"],
-  ["Toepassingen", "toepassingen"],
-  ["Industrieën", "industrieen"],
-  ["FAQ", "veelgestelde-vragen"],
-  ["Over ons", "over-ons"],
-  ["Contact", "contact"],
+export const routesFor = (ui) => [
+  [ui.navigation.products, "producten"],
+  [
+    ui.navigation.maintenanceRepairs,
+    "onderhoud-reparaties/onderhoud-en-reparaties",
+  ],
+  [ui.navigation.datasheets, "datasheets"],
+  [ui.navigation.applications, "toepassingen"],
+  [ui.navigation.industries, "industrieen"],
+  [ui.navigation.faq, "veelgestelde-vragen"],
+  [ui.navigation.about, "over-ons"],
+  [ui.navigation.contact, "contact"],
 ];
 export const products = [
   {
