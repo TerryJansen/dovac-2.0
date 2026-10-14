@@ -190,10 +190,40 @@ button {
   border-radius: 10px;
   padding: 2px 6px;
 }
+.brand-logo {
+  display: grid;
+  place-items: center;
+}
 .logo img {
+  grid-area: 1 / 1;
   width: 104px;
   height: 57px;
   object-fit: contain;
+}
+.brand-logo-dark {
+  display: none;
+}
+:root[data-theme="dark"] .logo {
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+}
+:root[data-theme="dark"] .brand-logo-light {
+  display: none;
+}
+:root[data-theme="dark"] .brand-logo-dark {
+  display: block;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .logo {
+    background: var(--surface-strong);
+    border: 1px solid var(--border);
+  }
+  :root:not([data-theme="light"]) .brand-logo-light {
+    display: none;
+  }
+  :root:not([data-theme="light"]) .brand-logo-dark {
+    display: block;
+  }
 }
 .site-header nav {
   display: flex;

@@ -51,7 +51,9 @@ for (const width of [390, 1440]) {
       const images = page.locator("img");
       for (let index = 0; index < (await images.count()); index += 1) {
         const image = images.nth(index);
-        await image.scrollIntoViewIfNeeded();
+        if (await image.isVisible()) {
+          await image.scrollIntoViewIfNeeded();
+        }
         await expect(image).toHaveJSProperty("complete", true);
         expect(
           await image.evaluate((element) => element.naturalWidth),

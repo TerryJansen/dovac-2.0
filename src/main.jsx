@@ -64,6 +64,27 @@ export function PageTitle({ label, children, description }) {
     </header>
   );
 }
+function BrandLogo() {
+  return (
+    <span className="brand-logo">
+      <img
+        className="brand-logo-light"
+        src={asset("logo")}
+        width="127"
+        height="69"
+        alt="DOVAC"
+      />
+      <img
+        className="brand-logo-dark"
+        src={`${base}images/logo-dark.png`}
+        width="260"
+        height="134"
+        alt=""
+        aria-hidden="true"
+      />
+    </span>
+  );
+}
 function Header() {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState(() => {
@@ -117,7 +138,7 @@ function Header() {
       <header className="site-header">
         <div className="wrap nav-wrap">
           <a className="logo" href={url()} aria-label="DOVAC home">
-            <img src={asset("logo")} width="127" height="69" alt="DOVAC" />
+            <BrandLogo />
           </a>
           <nav
             id="navigation"
@@ -236,13 +257,7 @@ function Footer() {
       <div className="wrap footer-grid">
         <div>
           <a className="logo" href={url()} aria-label="DOVAC home">
-            <img
-              src={asset("logo")}
-              alt="DOVAC"
-              width="127"
-              height="69"
-              loading="lazy"
-            />
+            <BrandLogo />
           </a>
           <p>
             De kracht achter

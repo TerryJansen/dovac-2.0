@@ -22,3 +22,16 @@ test("homepage presents clear conversion actions", async ({ page }) => {
     "partner-loop",
   );
 });
+
+test("brand logo switches to the dark-theme variant", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("dovac-theme", "light"));
+  await page.goto("./");
+  await page.getByRole("button", { name: "Donker thema" }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await expect(page.locator(".brand-logo-light").first()).not.toBeVisible();
+  await expect(page.locator(".brand-logo-dark").first()).toBeVisible();
+  await expect(page.locator(".brand-logo-dark").first()).toHaveJSProperty(
+    "naturalWidth",
+    260,
+  );
+});
