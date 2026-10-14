@@ -253,6 +253,60 @@ button {
 .site-header nav a[aria-current]:after {
   transform: scaleX(1);
 }
+.nav-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.nav-submenu-toggle {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 36px;
+  margin-right: -4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+}
+.nav-submenu-toggle svg {
+  transition: transform 0.2s ease;
+}
+.nav-dropdown:hover .nav-submenu-toggle svg,
+.nav-dropdown:focus-within .nav-submenu-toggle svg,
+.nav-dropdown[data-open] .nav-submenu-toggle svg {
+  transform: rotate(180deg);
+}
+.nav-submenu {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: -18px;
+  z-index: 30;
+  display: none;
+  min-width: 180px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  box-shadow: 0 18px 34px rgb(20 45 64 / 0.16);
+}
+.nav-dropdown:hover .nav-submenu,
+.nav-dropdown:focus-within .nav-submenu,
+.nav-dropdown[data-open] .nav-submenu {
+  display: grid;
+}
+.site-header nav .nav-submenu a {
+  padding: 10px 12px;
+  border-radius: 7px;
+  font-size: 15px;
+}
+.site-header nav .nav-submenu a:hover,
+.site-header nav .nav-submenu a:focus-visible {
+  background: var(--surface);
+}
+.site-header nav .nav-submenu a:after {
+  display: none;
+}
 .nav-actions {
   display: flex;
   align-items: center;
@@ -941,6 +995,33 @@ button {
   .site-header nav a {
     font-size: 18px;
     padding: 12px;
+  }
+  .nav-dropdown {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .nav-dropdown > a {
+    flex: 1;
+  }
+  .nav-submenu-toggle {
+    width: 44px;
+    height: 48px;
+    margin-right: 0;
+  }
+  .nav-submenu {
+    position: static;
+    order: 3;
+    width: 100%;
+    margin-top: 2px;
+    padding: 5px 0 8px 16px;
+    border: 0;
+    border-left: 1px solid var(--border);
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .site-header nav .nav-submenu a {
+    padding: 9px 12px;
+    font-size: 16px;
   }
   .nav-actions {
     margin-left: auto;

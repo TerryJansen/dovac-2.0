@@ -26,6 +26,26 @@ test("primary navigation opens distinct, directly addressable pages", async ({
   }
 });
 
+test("over ons menu reveals blog and news pages", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("./");
+  const submenu = page.locator("#about-submenu");
+  await expect(submenu).not.toBeVisible();
+  await page.locator(".nav-dropdown").hover();
+  await expect(submenu).toBeVisible();
+  for (const [label, heading] of [
+    ["Blog", "Blog"],
+    ["Nieuws", "Nieuws"],
+  ]) {
+    await submenu.getByRole("link", { name: label }).click();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
+    await page.reload();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
+    await page.goto("./");
+    await page.locator(".nav-dropdown").hover();
+  }
+});
+
 test("every industry detail places a square image beside its copy", async ({
   page,
 }) => {

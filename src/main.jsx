@@ -15,6 +15,7 @@ import {
   ShieldCheck,
   Waveform,
   CheckCircle,
+  CaretDown,
 } from "@phosphor-icons/react";
 import "@fontsource/outfit/400.css";
 import "@fontsource/outfit/500.css";
@@ -87,6 +88,7 @@ function BrandLogo() {
 }
 function Header() {
   const [open, setOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [theme, setTheme] = useState(() => {
     try {
       return localStorage.getItem("dovac-theme") || "system";
@@ -106,10 +108,11 @@ function Header() {
         setOpen(false);
         document.querySelector(".menu-toggle")?.focus();
       }
+      if (e.key === "Escape" && aboutOpen) setAboutOpen(false);
     };
     document.addEventListener("keydown", key);
     return () => document.removeEventListener("keydown", key);
-  }, [open]);
+  }, [aboutOpen, open]);
   const isDark =
     theme === "dark" ||
     (theme === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
@@ -145,19 +148,53 @@ function Header() {
             className={open ? "open" : ""}
             aria-label="Hoofdnavigatie"
           >
-            {routes.map(([text, path]) => (
-              <a
-                key={path}
-                href={url(path)}
-                aria-current={
-                  location.pathname.includes(`/nl/${path}/`)
-                    ? "page"
-                    : undefined
-                }
-              >
-                {text}
-              </a>
-            ))}
+            {routes.map(([text, path]) => {
+              const isAbout = path === "over-ons";
+              const isCurrent = location.pathname.includes(`/nl/${path}/`);
+              if (!isAbout)
+                return (
+                  <a
+                    key={path}
+                    href={url(path)}
+                    aria-current={isCurrent ? "page" : undefined}
+                  >
+                    {text}
+                  </a>
+                );
+              const isAboutSection =
+                isCurrent ||
+                ["blog", "nieuws"].some((item) =>
+                  location.pathname.includes(`/nl/${item}/`),
+                );
+              return (
+                <div
+                  className="nav-dropdown"
+                  data-open={aboutOpen || undefined}
+                  key={path}
+                >
+                  <a
+                    href={url(path)}
+                    aria-current={isAboutSection ? "page" : undefined}
+                  >
+                    {text}
+                  </a>
+                  <button
+                    type="button"
+                    className="nav-submenu-toggle"
+                    aria-label="Open menu Over ons"
+                    aria-expanded={aboutOpen}
+                    aria-controls="about-submenu"
+                    onClick={() => setAboutOpen((value) => !value)}
+                  >
+                    <CaretDown size={15} aria-hidden="true" />
+                  </button>
+                  <div className="nav-submenu" id="about-submenu">
+                    <a href={url("blog")}>Blog</a>
+                    <a href={url("nieuws")}>Nieuws</a>
+                  </div>
+                </div>
+              );
+            })}
           </nav>
           <div className="nav-actions">
             <a
@@ -280,6 +317,8 @@ function Footer() {
               {t}
             </a>
           ))}
+          <a href={url("blog")}>Blog</a>
+          <a href={url("nieuws")}>Nieuws</a>
         </div>
         <div>
           <h3>Kom in contact</h3>

@@ -122,6 +122,49 @@ function ApplicationsPage({ ui }) {
   );
 }
 
+function InsightsPage({ page, ui }) {
+  const { Reveal, PageTitle, ContactBand } = ui;
+  const isNews = page === "nieuws";
+  const title = isNews ? "Nieuws" : "Blog";
+  const description = isNews
+    ? "Updates en mededelingen van DOVAC vindt u hier."
+    : "Praktische kennis over blower- en vacuümtechniek, overzichtelijk bij elkaar.";
+  return (
+    <>
+      <PageTitle label="Over DOVAC" description={description}>
+        {title}
+      </PageTitle>
+      <section className="wrap insights-page">
+        <Reveal className="insights-page-image">
+          <img
+            src={originalAsset("7ef641b23b81fed5.jpg")}
+            alt="Het DOVAC-bedrijfspand in Zevenhuizen"
+            width="941"
+            height="801"
+          />
+        </Reveal>
+        <Reveal className="insights-page-copy">
+          <FileText size={34} weight="light" aria-hidden="true" />
+          <h2>{isNews ? "Blijf op de hoogte." : "Kennis die verder helpt."}</h2>
+          <p>
+            {isNews
+              ? "Nieuwe berichten van DOVAC worden op deze pagina verzameld."
+              : "Nieuwe artikelen over toepassingen, onderhoud en techniek worden op deze pagina verzameld."}
+          </p>
+          <a
+            className="text-link"
+            href={url(isNews ? "over-ons" : "toepassingen")}
+          >
+            {isNews ? "Lees over DOVAC" : "Bekijk toepassingen"}
+            <ArrowUpRight size={20} />
+          </a>
+        </Reveal>
+      </section>
+      <ContactBand />
+    </>
+  );
+}
+
 function IndustriesPage({ page, ui }) {
   const { Reveal, PageTitle, ContactBand } = ui;
   const industry = industries.find(([slug]) => page === `industrieen/${slug}`);
@@ -201,6 +244,8 @@ function IndustriesPage({ page, ui }) {
 }
 
 export default function InnerPage({ page, ui }) {
+  if (page === "blog" || page === "nieuws")
+    return <InsightsPage page={page} ui={ui} />;
   const { Reveal, Button, PageTitle, ContactBand } = ui;
   const product = products.find((p) => page === `producten/${p.slug}`);
   if (product) return <ProductDetail product={product} ui={ui} />;

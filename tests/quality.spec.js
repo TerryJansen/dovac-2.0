@@ -24,6 +24,8 @@ const routes = [
   "industrieen/tuinbouw-en-landbouw",
   "industrieen/waterzuivering-en-milieu",
   "over-ons",
+  "blog",
+  "nieuws",
   "contact",
   "producten/vacuumpompen",
   "producten/draaischuifpompen",

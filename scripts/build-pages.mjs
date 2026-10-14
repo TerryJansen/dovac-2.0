@@ -24,6 +24,8 @@ const pages = {
   faq: "Veelgestelde vragen",
   "veelgestelde-vragen": "Veelgestelde vragen",
   "over-ons": "Over DOVAC",
+  blog: "Blog",
+  nieuws: "Nieuws",
   contact: "Contact",
   "producten/vacuumpompen": "Vacuümpompen",
   "producten/draaischuifpompen": "Draaischuifpompen",
