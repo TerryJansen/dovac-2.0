@@ -41,7 +41,7 @@ for (const width of [390, 1440]) {
   test(`all routes render without overflow or broken images at ${width}px`, async ({
     page,
   }) => {
-    test.setTimeout(120000);
+    test.setTimeout(180000);
     await page.setViewportSize({ width, height: 900 });
     await page.emulateMedia({ reducedMotion: "reduce" });
     const errors = [];

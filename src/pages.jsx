@@ -17,6 +17,7 @@ import {
 } from "@phosphor-icons/react";
 import { products, faqs, url, originalAsset } from "./site-data";
 import { applicationPages, industries } from "./source-content";
+import { knowledgeContent } from "./knowledge-content";
 import { ProductExplorer, ProductDetail } from "./products";
 import ContactForm from "./contact-form";
 import "./pages.css";
@@ -124,41 +125,34 @@ function ApplicationsPage({ ui }) {
 
 function InsightsPage({ page, ui }) {
   const { Reveal, PageTitle, ContactBand } = ui;
-  const isNews = page === "nieuws";
-  const title = isNews ? "Nieuws" : "Blog";
-  const description = isNews
-    ? "Updates en mededelingen van DOVAC vindt u hier."
-    : "Praktische kennis over blower- en vacuümtechniek, overzichtelijk bij elkaar.";
+  const content = knowledgeContent[page];
   return (
     <>
-      <PageTitle label="Over DOVAC" description={description}>
-        {title}
+      <PageTitle label="Over DOVAC" description={content.description}>
+        {page === "nieuws" ? "Nieuws" : "Blog"}
       </PageTitle>
-      <section className="wrap insights-page">
-        <Reveal className="insights-page-image">
-          <img
-            src={originalAsset("7ef641b23b81fed5.jpg")}
-            alt="Het DOVAC-bedrijfspand in Zevenhuizen"
-            width="941"
-            height="801"
-          />
-        </Reveal>
-        <Reveal className="insights-page-copy">
-          <FileText size={34} weight="light" aria-hidden="true" />
-          <h2>{isNews ? "Blijf op de hoogte." : "Kennis die verder helpt."}</h2>
-          <p>
-            {isNews
-              ? "Nieuwe berichten van DOVAC worden op deze pagina verzameld."
-              : "Nieuwe artikelen over toepassingen, onderhoud en techniek worden op deze pagina verzameld."}
-          </p>
-          <a
-            className="text-link"
-            href={url(isNews ? "over-ons" : "toepassingen")}
+      <section className="wrap insights-grid">
+        {content.items.map((item, index) => (
+          <Reveal
+            className="insight-card"
+            delay={index * 0.03}
+            key={item.source}
           >
-            {isNews ? "Lees over DOVAC" : "Bekijk toepassingen"}
-            <ArrowUpRight size={20} />
-          </a>
-        </Reveal>
+            <a href={item.source} target="_blank" rel="noreferrer">
+              <img src={originalAsset(item.image)} alt="" loading="lazy" />
+              <div className="insight-card-copy">
+                <p className="insight-meta">
+                  {item.date} <span>{item.readTime}</span>
+                </p>
+                <h2>{item.title}</h2>
+                <p>{item.excerpt}</p>
+                <span className="text-link">
+                  Lees artikel <ArrowUpRight size={20} aria-hidden="true" />
+                </span>
+              </div>
+            </a>
+          </Reveal>
+        ))}
       </section>
       <ContactBand />
     </>

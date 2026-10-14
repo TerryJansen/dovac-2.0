@@ -1,48 +1,69 @@
 .product-section {
   padding-bottom: 80px;
 }
-.insights-page {
+.insights-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-  gap: clamp(28px, 5vw, 80px);
-  align-items: stretch;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
   padding-bottom: 90px;
 }
-.insights-page-image {
-  min-height: 350px;
-  border-radius: 20px;
+.insight-card {
   overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--bg);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
 }
-.insights-page-image img {
-  width: 100%;
+.insight-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent);
+}
+.insight-card > a {
+  display: flex;
   height: 100%;
+  flex-direction: column;
+}
+.insight-card img {
+  width: 100%;
+  aspect-ratio: 1.55;
   object-fit: cover;
 }
-.insights-page-copy {
+.insight-card-copy {
   display: flex;
+  height: 100%;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
-  padding: clamp(28px, 4vw, 54px);
-  border-radius: 20px;
-  background: var(--surface);
+  padding: 24px;
 }
-.insights-page-copy > svg {
-  color: var(--accent);
-  margin-bottom: 22px;
-}
-.insights-page-copy h2 {
-  font-size: clamp(34px, 3vw, 48px);
-  line-height: 1.08;
-}
-.insights-page-copy p {
-  max-width: 430px;
-  margin-top: 18px;
+.insight-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
   color: var(--muted);
-  font-size: 17px;
+  font-size: 13px;
 }
-.insights-page-copy .text-link {
-  margin-top: 28px;
+.insight-meta span::before {
+  content: "/";
+  margin-right: 9px;
+}
+.insight-card h2 {
+  margin-top: 15px;
+  font-size: 25px;
+  line-height: 1.14;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+.insight-card-copy > p:not(.insight-meta) {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.insight-card .text-link {
+  margin-top: auto;
+  padding-top: 24px;
 }
 .product-grid {
   display: grid;
@@ -632,12 +653,8 @@
   margin-top: 26px;
 }
 @media (max-width: 1023px) {
-  .insights-page {
-    grid-template-columns: 1fr;
-    gap: 22px;
-  }
-  .insights-page-image {
-    min-height: 300px;
+  .insights-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .product-card-copy {
     padding: 25px;
@@ -699,6 +716,11 @@
   }
 }
 @media (max-width: 767px) {
+  .insights-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-bottom: 56px;
+  }
   .product-section {
     padding-bottom: 50px;
   }

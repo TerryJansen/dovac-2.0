@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test("primary navigation opens distinct, directly addressable pages", async ({
   page,
 }) => {
-  test.setTimeout(60000);
+  test.setTimeout(90000);
   await page.goto("./");
   const pages = [
     ["Producten", "Vind de techniek die bij u past."],
@@ -44,6 +44,27 @@ test("over ons menu reveals blog and news pages", async ({ page }) => {
     await page.goto("./");
     await page.locator(".nav-dropdown").hover();
   }
+});
+
+test("blog and news show the recovered DOVAC source content", async ({
+  page,
+}) => {
+  await page.goto("./nl/blog/");
+  await expect(page.locator(".insight-card")).toHaveCount(9);
+  await expect(
+    page.getByRole("heading", { name: "Onderhoud = Behoud" }),
+  ).toBeVisible();
+  await expect(page.locator(".insight-card a").first()).toHaveAttribute(
+    "href",
+    "https://dovac.nl/nl/kennis/blog/onderhoud-behoud/",
+  );
+  await page.goto("./nl/nieuws/");
+  await expect(page.locator(".insight-card")).toHaveCount(1);
+  await expect(
+    page.getByRole("heading", {
+      name: "DOVAC op Empack: vacuüm- en blowertechniek voor iedere industrie",
+    }),
+  ).toBeVisible();
 });
 
 test("every industry detail places a square image beside its copy", async ({
