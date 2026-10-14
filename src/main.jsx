@@ -362,22 +362,23 @@ function Footer() {
 }
 function Home({ onRequest }) {
   const reduce = useReducedMotion();
+  const home = uiFor().home;
   return (
     <>
       <section className="hero wrap">
         <div className="hero-copy">
           <p className="eyebrow">
             <span className="mini-line" />
-            Blower- en vacuümtechniek
+            {home.eyebrow}
           </p>
-          <h1 aria-label="Techniek die blijft draaien.">
+          <h1 aria-label={home.title}>
             <span className="line-mask">
               <motion.span
                 initial={reduce ? false : { y: "110%" }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
               >
-                Techniek die{" "}
+                {home.titleFirstLine}{" "}
               </motion.span>
             </span>
             <span className="line-mask accent">
@@ -390,29 +391,28 @@ function Home({ onRequest }) {
                   ease: [0.16, 1, 0.3, 1],
                 }}
               >
-                blijft draaien.
+                {home.titleSecondLine}
               </motion.span>
             </span>
           </h1>
           <Reveal delay={0.2}>
-            <p className="hero-description">
-              Van de juiste vacuümpomp tot vakkundig onderhoud. DOVAC houdt uw
-              proces in beweging.
-            </p>
+            <p className="hero-description">{home.description}</p>
             <div className="hero-buttons">
               <button
                 className="button"
                 type="button"
                 onClick={() => onRequest("quote")}
               >
-                Offerte aanvragen <ArrowUpRight size={20} aria-hidden="true" />
+                {home.requestQuote}{" "}
+                <ArrowUpRight size={20} aria-hidden="true" />
               </button>
               <button
                 className="button secondary"
                 type="button"
                 onClick={() => onRequest("appointment")}
               >
-                Afspraak maken <ArrowRight size={20} aria-hidden="true" />
+                {home.makeAppointment}{" "}
+                <ArrowRight size={20} aria-hidden="true" />
               </button>
             </div>
           </Reveal>
@@ -421,7 +421,7 @@ function Home({ onRequest }) {
           <div className="image-frame">
             <img
               src={originalAsset("1f7e68e87940984c.jpg")}
-              alt="DOVAC-monteur werkt zorgvuldig aan een vacuümpomp"
+              alt={home.heroImageAlt}
               width="941"
               height="659"
               fetchPriority="high"
@@ -431,41 +431,41 @@ function Home({ onRequest }) {
             </div>
           </div>
           <div className="photo-caption">
-            <span>Precisie in elk onderdeel.</span>
-            <span>Vakmanschap van DOVAC</span>
+            <span>{home.precisionCaption}</span>
+            <span>{home.craftsmanshipCaption}</span>
           </div>
         </Reveal>
       </section>
       <section className="proof-strip">
         <div className="wrap">
           <div>
-            <strong>Sinds 2003</strong>
-            <span>Thuis in vacuümtechniek</span>
+            <strong>{home.since2003}</strong>
+            <span>{home.atHomeInVacuumTechnology}</span>
           </div>
           <div>
             <strong>24/7</strong>
-            <span>Bereikbaar voor uw vraag</span>
+            <span>{home.availableForQuestion}</span>
           </div>
           <div>
-            <strong>Van advies tot revisie</strong>
-            <span>Alles onder één dak</span>
+            <strong>{home.fromAdviceToOverhaul}</strong>
+            <span>{home.allUnderOneRoof}</span>
           </div>
           <a href={url("over-ons")}>
-            Maak kennis met DOVAC <ArrowUpRight size={24} />
+            {home.getToKnowDovac} <ArrowUpRight size={24} />
           </a>
         </div>
       </section>
       <section className="product-motion-section">
         <div className="wrap product-motion-layout">
           <Reveal className="product-motion-copy">
-            <p className="eyebrow">3D weergave</p>
-            <h2>Bekijk de vacuümpomp van dichtbij.</h2>
+            <p className="eyebrow">{home.productMotion.eyebrow}</p>
+            <h2>{home.productMotion.title}</h2>
             <p id="product-motion-description">
-              Bekijk de vorm en bewegende onderdelen van de vacuümpomp in deze
-              korte 3D-demonstratie.
+              {home.productMotion.description}
             </p>
             <a className="text-link" href={url("producten/vacuumpompen")}>
-              Bekijk vacuümpompen <ArrowRight size={20} aria-hidden="true" />
+              {home.productMotion.viewVacuumPumps}{" "}
+              <ArrowRight size={20} aria-hidden="true" />
             </a>
           </Reveal>
           <Reveal className="product-motion-video" delay={0.08}>
@@ -480,7 +480,7 @@ function Home({ onRequest }) {
               preload="metadata"
               aria-describedby="product-motion-description"
             >
-              Uw browser ondersteunt deze video niet.
+              {home.productMotion.unsupportedVideo}
             </video>
           </Reveal>
         </div>
@@ -488,31 +488,24 @@ function Home({ onRequest }) {
       <section className="section wrap">
         <Reveal>
           <h2>
-            De juiste techniek.
+            {home.solutions.title}
             <br />
-            <span className="muted">Voor uw toepassing.</span>
+            <span className="muted">{home.solutions.subtitle}</span>
           </h2>
-          <p className="section-intro">
-            Vacuüm creëren, lucht verplaatsen of gericht drogen. Begin bij wat
-            uw proces nodig heeft.
-          </p>
+          <p className="section-intro">{home.solutions.intro}</p>
         </Reveal>
         <div className="solutions-grid">
           <Reveal className="solution vacuum">
             <div className="solution-icon">
               <Waveform weight="thin" size={92} />
             </div>
-            <span className="category-label">Vacuümtechniek</span>
-            <h3>
-              Meer grip.
-              <br />
-              Met minder druk.
-            </h3>
-            <p>Vacuümpompen en draaischuifpompen, afgestemd op uw proces.</p>
+            <span className="category-label">{home.solutions.vacuumLabel}</span>
+            <h3>{home.solutions.vacuumTitle}</h3>
+            <p>{home.solutions.vacuumDescription}</p>
             <a
               className="round-link"
               href={url("producten/vacuumpompen")}
-              aria-label="Bekijk vacuümpompen"
+              aria-label={home.solutions.viewVacuumPumps}
             >
               <ArrowUpRight size={28} />
             </a>
@@ -521,26 +514,22 @@ function Home({ onRequest }) {
             <div className="solution-icon">
               <Fan weight="thin" size={108} />
             </div>
-            <span className="category-label">Blowertechniek</span>
-            <h3>
-              Lucht die
-              <br />
-              werk verzet.
-            </h3>
-            <p>Zijkanaalventilatoren, turbo blowers en luchtmessen.</p>
+            <span className="category-label">{home.solutions.blowerLabel}</span>
+            <h3>{home.solutions.blowerTitle}</h3>
+            <p>{home.solutions.blowerDescription}</p>
             <a
               className="round-link"
               href={url("producten/zijkanaalventilatoren")}
-              aria-label="Bekijk zijkanaalventilatoren"
+              aria-label={home.solutions.viewSideChannelBlowers}
             >
               <ArrowUpRight size={28} />
             </a>
           </Reveal>
         </div>
         <div className="section-bottom">
-          <span>Ook voor complete systemen en spare parts.</span>
+          <span>{home.solutions.systemsAndParts}</span>
           <a className="text-link" href={url("producten")}>
-            Alle productgroepen <ArrowRight size={20} />
+            {home.solutions.allProductGroups} <ArrowRight size={20} />
           </a>
         </div>
       </section>
@@ -550,64 +539,48 @@ function Home({ onRequest }) {
           <Reveal className="service-image">
             <img
               src={originalAsset("2a7cea9538ceccd9.jpg")}
-              alt="Een DOVAC-specialist voert onderhoud uit in de werkplaats"
+              alt={home.service.imageAlt}
               width="480"
               height="801"
               loading="lazy"
             />
           </Reveal>
           <Reveal className="service-copy">
-            <p className="eyebrow">Onderhoud & reparaties</p>
-            <h2>
-              Stilstand?
-              <br />
-              Daar werken
-              <br />
-              we niet aan mee.
-            </h2>
-            <p>
-              Voorkom problemen met tijdig onderhoud. En gaat er toch iets mis?
-              Dan helpen we u weer op weg.
-            </p>
+            <p className="eyebrow">{home.service.eyebrow}</p>
+            <h2>{home.service.title}</h2>
+            <p>{home.service.description}</p>
             <div className="service-points">
               <div>
                 <Wrench size={22} />
-                <span>Onderhoud, reparatie en revisie</span>
+                <span>{home.service.maintenanceRepairOverhaul}</span>
               </div>
               <div>
                 <ShieldCheck size={22} />
-                <span>Uitgebreid getest na onderhoud</span>
+                <span>{home.service.thoroughlyTested}</span>
               </div>
               <div>
                 <CheckCircle size={22} />
-                <span>Ook voor pompen van andere merken</span>
+                <span>{home.service.otherBrands}</span>
               </div>
             </div>
             <Button href={url("onderhoud-reparaties/onderhoud-en-reparaties")}>
-              Ontdek onze service
+              {home.service.discoverService}
             </Button>
           </Reveal>
         </div>
       </section>
       <section className="about-section wrap">
         <Reveal>
-          <h2>
-            Technische kennis.
-            <br />
-            Persoonlijk betrokken.
-          </h2>
-          <p className="section-intro">
-            Achter iedere pomp staat een team dat meedenkt. Vanuit Zevenhuizen
-            helpen we u van eerste vraag tot werkende oplossing.
-          </p>
+          <h2>{home.about.title}</h2>
+          <p className="section-intro">{home.about.description}</p>
           <a className="text-link" href={url("over-ons")}>
-            Meer over DOVAC <ArrowUpRight size={20} />
+            {home.about.moreAboutDovac} <ArrowUpRight size={20} />
           </a>
         </Reveal>
         <Reveal className="wide-image">
           <img
             src={originalAsset("7ef641b23b81fed5.jpg")}
-            alt="Het DOVAC-magazijn met onderdelen en pompen op voorraad"
+            alt={home.about.imageAlt}
             width="1600"
             height="221"
             loading="lazy"
@@ -623,7 +596,8 @@ function App() {
   const relative = location.pathname.startsWith(base)
     ? location.pathname.slice(base.length)
     : location.pathname.slice(1);
-  const page = relative.replace(/^nl\//, "").replace(/\/$/, "") || "home";
+  const page =
+    relative.replace(/^(?:nl|en|de)\//, "").replace(/\/$/, "") || "home";
   useEffect(() => {
     const heading = document.querySelector("h1")?.textContent;
     document.title = `${heading || "Blower- en vacuümtechniek"} | DOVAC`;
