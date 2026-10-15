@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
   ArrowRight,
   CheckCircle,
   FileText,
+  X,
 } from "@phosphor-icons/react";
 import { url, originalAsset } from "./site-data";
 import { contentFor, currentLocale, localize, uiFor } from "./i18n";
@@ -21,6 +22,7 @@ function ProductCatalogue() {
   const [searchTerm, setSearchTerm] = useState("");
   const [catalogueProducts, setCatalogueProducts] = useState([]);
   const [catalogueStatus, setCatalogueStatus] = useState("loading");
+  const detailDialog = useRef(null);
   useEffect(() => {
     let active = true;
     fetch(`${import.meta.env.BASE_URL}data/product-content.json`)
@@ -71,6 +73,13 @@ function ProductCatalogue() {
     (total, category) => total + category.products.length,
     0,
   );
+  const selectedProduct = catalogueProducts.find(
+    (product) => product.sourcePath === selectedPath,
+  );
+  useEffect(() => {
+    const dialog = detailDialog.current;
+    if (selectedProduct && dialog && !dialog.open) dialog.showModal();
+  }, [selectedProduct]);
   const copy = {
     nl: {
       eyebrow: "Productassortiment",
@@ -185,7 +194,7 @@ function ProductCatalogue() {
             </summary>
             <div className="catalogue-grid">
               {category.products.map((product) => {
-                const isSelected = selectedPath === product.sourcePath;
+                const isSelected = false;
                 return (
                   <article
                     className="catalogue-product"
@@ -193,11 +202,9 @@ function ProductCatalogue() {
                   >
                     <button
                       type="button"
-                      aria-expanded={isSelected}
-                      aria-controls={`product-info-${product.slug}`}
-                      onClick={() =>
-                        setSelectedPath(isSelected ? null : product.sourcePath)
-                      }
+                      aria-haspopup="dialog"
+                      aria-controls="catalogue-product-dialog"
+                      onClick={() => setSelectedPath(product.sourcePath)}
                     >
                       <img
                         src={originalAsset(product.localImage)}
@@ -326,6 +333,117 @@ function ProductCatalogue() {
           </details>
         ))
       )}
+      <dialog
+        ref={detailDialog}
+        id="catalogue-product-dialog"
+        className="catalogue-product-dialog"
+        aria-labelledby="catalogue-product-dialog-title"
+        onClose={() => setSelectedPath(null)}
+        onClick={(event) => {
+          if (event.target === event.currentTarget)
+            detailDialog.current?.close();
+        }}
+      >
+        {selectedProduct && (
+          <>
+            <header className="catalogue-product-dialog-header">
+              <div>
+                <p className="eyebrow">{selectedProduct.category}</p>
+                <h2 id="catalogue-product-dialog-title">
+                  {selectedProduct.title}
+                </h2>
+              </div>
+              <button
+                className="catalogue-product-dialog-close"
+                type="button"
+                aria-label={copy.close}
+                onClick={() => detailDialog.current?.close()}
+              >
+                <X size={22} aria-hidden="true" />
+              </button>
+            </header>
+            <div className="catalogue-product-dialog-content">
+              <div className="catalogue-product-dialog-overview">
+                <img
+                  src={originalAsset(selectedProduct.localImage)}
+                  alt={selectedProduct.mainImage?.alt || selectedProduct.title}
+                  width="540"
+                  height="482"
+                />
+                <section className="catalogue-product-dialog-section">
+                  <h3>{copy.productDescription}</h3>
+                  {selectedProduct.descriptions.map((description, index) => (
+                    <div
+                      className="source-description"
+                      key={`${selectedProduct.slug}-description-${index}`}
+                      dangerouslySetInnerHTML={{ __html: description.html }}
+                    />
+                  ))}
+                </section>
+              </div>
+              {selectedProduct.specificationTables.length > 0 && (
+                <section className="catalogue-product-dialog-section">
+                  <h3>{copy.specifications}</h3>
+                  {selectedProduct.specificationTables.map((table, index) => (
+                    <div
+                      className="specification-table-scroll"
+                      key={`${selectedProduct.slug}-table-${index}`}
+                      tabIndex="0"
+                      role="region"
+                      aria-label={`${selectedProduct.title} ${copy.specifications} ${index + 1}`}
+                    >
+                      <table>
+                        <tbody>
+                          {table
+                            .filter((row) => row.some(Boolean))
+                            .map((row, rowIndex) => (
+                              <tr
+                                key={`${selectedProduct.slug}-row-${rowIndex}`}
+                              >
+                                {row.map((cell, cellIndex) => {
+                                  const Tag = rowIndex === 0 ? "th" : "td";
+                                  return (
+                                    <Tag key={`${cellIndex}-${cell}`}>
+                                      {cell}
+                                    </Tag>
+                                  );
+                                })}
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  ))}
+                </section>
+              )}
+              <section className="catalogue-product-dialog-section">
+                <h3>{copy.documentation}</h3>
+                <div className="catalogue-documentation">
+                  {selectedProduct.relatedDocuments.length > 0 ? (
+                    <ul>
+                      {selectedProduct.relatedDocuments.map(
+                        (document, index) => (
+                          <li key={`${selectedProduct.slug}-document-${index}`}>
+                            <FileText size={18} aria-hidden="true" />
+                            <span>{document.title}</span>
+                            <a
+                              href={`mailto:info@dovac.nl?subject=${encodeURIComponent(`${copy.request}: ${document.title}`)}&body=${encodeURIComponent(`Product: ${selectedProduct.title}\\nDocument: ${document.title}\\n`)}`}
+                            >
+                              {copy.request}
+                            </a>
+                          </li>
+                        ),
+                      )}
+                    </ul>
+                  ) : (
+                    <p>{copy.noDocuments}</p>
+                  )}
+                </div>
+              </section>
+            </div>
+          </>
+        )}
+      </dialog>
     </section>
   );
 }

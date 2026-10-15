@@ -56,37 +56,50 @@ test("catalogue search narrows results and reports no matches", async ({
   await expect(page.locator(".catalogue-category[open]")).toHaveCount(0);
 });
 
-test("a catalogue product shows its source description, specs and documents", async ({
+test("a product opens a centered dialog with its image and complete source information", async ({
   page,
 }) => {
-  await page.goto("./nl/producten/");
-  await page
-    .getByRole("searchbox", { name: "Zoek in producten" })
-    .fill("DVP CPA Triplex H");
-  await page.getByRole("button", { name: "DVP CPA Triplex H" }).click();
-  await expect(
-    page.getByText("Productbeschrijving", { exact: true }),
-  ).toBeVisible();
-  await page.getByText("Productbeschrijving", { exact: true }).click();
-  await expect(
-    page.getByText("Onze CPA Triplex H medische vacuümpompen"),
-  ).toBeVisible();
-  await expect(
-    page.getByText("Technische specificaties", { exact: true }),
-  ).toBeVisible();
-  await page.getByText("Technische specificaties", { exact: true }).click();
-  await expect(
-    page.getByRole("cell", { name: "DVP CPA 3Hx 305/1000V" }),
-  ).toBeVisible();
-  await page.getByText("Documentatie", { exact: true }).click();
-  await expect(
-    page.getByText("Datasheet DVP CPA Triplex H", { exact: true }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: "Document aanvragen" }),
-  ).toHaveAttribute("href", /^mailto:info@dovac.nl\?subject=/);
-  await page.getByRole("button", { name: "Sluit productinformatie" }).click();
-  await expect(
-    page.getByText("Productbeschrijving", { exact: true }),
-  ).not.toBeVisible();
+  const catalogue = JSON.parse(
+    readFileSync(resolve("public/data/product-content.json"), "utf8"),
+  );
+  const product = catalogue.find((item) => item.title === "DVP CPA Triplex H");
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("./nl/producten/");
+    await page
+      .getByRole("searchbox", { name: "Zoek in producten" })
+      .fill(product.title);
+    const trigger = page.getByRole("button", { name: product.title });
+    await trigger.click();
+    const dialog = page.getByRole("dialog", { name: product.title });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.locator("img")).toHaveAttribute(
+      "src",
+      expect.stringContaining(product.localImage),
+    );
+    await expect(dialog.locator(".source-description")).toHaveCount(
+      product.descriptions.length,
+    );
+    await expect(dialog.locator(".specification-table-scroll")).toHaveCount(
+      product.specificationTables.length,
+    );
+    await expect(dialog.locator(".catalogue-documentation li")).toHaveCount(
+      product.relatedDocuments.length,
+    );
+    await expect(dialog).toContainText("Productbeschrijving");
+    await expect(dialog).toContainText("Technische specificaties");
+    await expect(dialog).toContainText("Documentatie");
+    const box = await dialog.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box.x).toBeGreaterThanOrEqual(0);
+    expect(box.x + box.width).toBeLessThanOrEqual(width);
+    expect(box.y).toBeGreaterThanOrEqual(0);
+    expect(box.y + box.height).toBeLessThanOrEqual(900);
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth),
+    ).toBe(width);
+    await page.keyboard.press("Escape");
+    await expect(dialog).not.toBeVisible();
+    await expect(trigger).toBeFocused();
+  }
 });
