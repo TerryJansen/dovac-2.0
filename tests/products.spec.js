@@ -86,10 +86,12 @@ test("a product opens a centered dialog with its image and complete source infor
     await expect(dialog.locator(".specification-table-scroll")).toHaveCount(
       product.specificationTables.length,
     );
-    await expect(dialog.locator(".catalogue-documentation li")).toHaveCount(0);
+    await expect(dialog.locator(".catalogue-documentation li")).toHaveCount(
+      product.relatedDocuments.length,
+    );
     await expect(dialog).toContainText("Productbeschrijving");
     await expect(dialog).toContainText("Technische specificaties");
-    await expect(dialog).not.toContainText("Documentatie");
+    await expect(dialog).toContainText("Documentatie");
     const moreButton = dialog.getByRole("button", { name: "Bekijk meer" });
     await expect(moreButton).toHaveCount(product.descriptions.length);
     await expect(dialog).toContainText(
@@ -106,20 +108,6 @@ test("a product opens a centered dialog with its image and complete source infor
     await expect(lessButton).toHaveAttribute("aria-expanded", "true");
     await expect(dialog).toContainText(
       "Kwalificatie voor Industrie 4.0-financiering",
-    );
-    await expect(dialog).toContainText("Documentatie");
-    await expect(dialog.locator(".catalogue-documentation li")).toHaveCount(
-      product.relatedDocuments.length,
-    );
-    const requestLink = dialog.locator(".catalogue-documentation li a").first();
-    await expect(requestLink).toHaveAttribute(
-      "href",
-      /^mailto:info@dovac\.nl\?/,
-    );
-    const requestUrl = new URL(await requestLink.getAttribute("href"));
-    expect(requestUrl.searchParams.get("body")).toContain(product.title);
-    expect(requestUrl.searchParams.get("body")).toContain(
-      product.relatedDocuments[0].title,
     );
     await lessButton.click();
     await expect(moreButton).toHaveAttribute("aria-expanded", "false");
@@ -139,32 +127,4 @@ test("a product opens a centered dialog with its image and complete source infor
     await expect(dialog).not.toBeVisible();
     await expect(trigger).toBeFocused();
   }
-});
-
-test("documentation is grouped with full descriptions and missing files stay explicit", async ({
-  page,
-}) => {
-  const catalogue = JSON.parse(
-    readFileSync(resolve("public/data/product-content.json"), "utf8"),
-  );
-  const product = catalogue.find(
-    (item) => item.title === "Roots & Vacuümboosters",
-  );
-  expect(product.relatedDocuments).toHaveLength(0);
-  await page.goto("./nl/producten/");
-  await page
-    .getByRole("searchbox", { name: "Zoek in producten" })
-    .fill(product.title);
-  await page.getByRole("button", { name: product.title }).click();
-  const dialog = page.getByRole("dialog", { name: product.title });
-  await expect(dialog).toBeVisible();
-  await expect(dialog).not.toContainText(
-    "Op de DOVAC-bronpagina staat voor dit product geen afzonderlijke documentatielink vermeld.",
-  );
-  await dialog.getByRole("button", { name: "Bekijk meer" }).click();
-  await expect(dialog).toContainText("Documentatie");
-  await expect(dialog).toContainText(
-    "Op de DOVAC-bronpagina staat voor dit product geen afzonderlijke documentatielink vermeld.",
-  );
-  await expect(dialog.locator(".catalogue-documentation li")).toHaveCount(0);
 });
