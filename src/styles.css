@@ -61,7 +61,18 @@
 }
 body {
   margin: 0;
-  background: var(--bg);
+  background:
+    radial-gradient(
+      circle at 92% 8%,
+      color-mix(in srgb, var(--air) 9%, transparent),
+      transparent 24rem
+    ),
+    radial-gradient(
+      circle at 4% 30%,
+      color-mix(in srgb, var(--vacuum) 7%, transparent),
+      transparent 26rem
+    ),
+    var(--bg);
   color: var(--text);
   overflow-x: clip;
 }
@@ -929,7 +940,48 @@ button {
   align-items: center;
 }
 .page-title {
-  padding-block: 64px 42px;
+  position: relative;
+  isolation: isolate;
+  margin-top: 26px;
+  padding: clamp(42px, 6vw, 82px) clamp(28px, 5vw, 74px) clamp(38px, 5vw, 64px);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 26px;
+  background:
+    linear-gradient(
+      130deg,
+      color-mix(in srgb, var(--surface) 92%, transparent),
+      var(--bg)
+    ),
+    var(--surface);
+  box-shadow: 0 18px 44px rgb(20 45 64 / 0.06);
+}
+.page-title::before,
+.page-title::after {
+  position: absolute;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+}
+.page-title::before {
+  inset: 0;
+  opacity: 0.52;
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to right, #000, transparent 74%);
+}
+.page-title::after {
+  width: clamp(180px, 25vw, 360px);
+  aspect-ratio: 1;
+  right: clamp(-96px, -5vw, -40px);
+  top: -38%;
+  border: clamp(28px, 4vw, 56px) solid
+    color-mix(in srgb, var(--accent) 18%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 clamp(28px, 4vw, 56px)
+    color-mix(in srgb, var(--air) 10%, transparent);
 }
 .page-title h1 {
   font-size: clamp(44px, 5.6vw, 78px);
@@ -943,6 +995,10 @@ button {
   max-width: 640px;
   color: var(--muted);
   margin-top: 24px;
+}
+.page-title > * {
+  position: relative;
+  z-index: 1;
 }
 @media (min-width: 1200px) and (max-width: 1400px) {
   .wrap {
