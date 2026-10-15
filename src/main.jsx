@@ -17,6 +17,7 @@ import {
   CheckCircle,
   CaretDown,
 } from "@phosphor-icons/react";
+import { Analytics } from "@vercel/analytics/react";
 import "@fontsource/outfit/400.css";
 import "@fontsource/outfit/500.css";
 import "@fontsource/outfit/600.css";
@@ -620,6 +621,7 @@ function App() {
       {requestMode && (
         <RequestModal mode={requestMode} onClose={() => setRequestMode(null)} />
       )}
+      <Analytics />
     </>
   );
 }
