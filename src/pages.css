@@ -115,6 +115,96 @@
   font-size: 14px;
   line-height: 1.5;
 }
+.catalogue-detail section + section {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+.catalogue-detail h4 {
+  margin: 0 0 12px;
+  color: var(--text);
+  font-size: 16px;
+}
+.source-description p,
+.source-description ul,
+.source-description ol {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+.source-description h3,
+.source-description h4 {
+  margin: 18px 0 8px;
+  font-size: 17px;
+  line-height: 1.35;
+}
+.source-description li + li {
+  margin-top: 6px;
+}
+.specification-table-scroll {
+  max-width: 100%;
+  margin-top: 12px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  scrollbar-color: var(--accent) var(--panel);
+}
+.specification-table-scroll table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+.specification-table-scroll th,
+.specification-table-scroll td {
+  min-width: 88px;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.specification-table-scroll th {
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  font-weight: 700;
+  white-space: nowrap;
+}
+.specification-table-scroll td {
+  color: var(--muted);
+}
+.specification-table-scroll tr:last-child td {
+  border-bottom: 0;
+}
+.catalogue-documentation ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.catalogue-documentation li {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 13px;
+}
+.catalogue-documentation li > svg {
+  color: var(--accent);
+}
+.catalogue-documentation li a {
+  margin: 0;
+  white-space: nowrap;
+}
+.catalogue-detail .catalogue-close {
+  margin-left: 0;
+  padding: 0;
+}
 .catalogue-detail a,
 .catalogue-detail button {
   display: inline-flex;
@@ -148,6 +238,12 @@
   }
   .catalogue-category {
     margin-top: 40px;
+  }
+  .catalogue-documentation li {
+    grid-template-columns: 20px minmax(0, 1fr);
+  }
+  .catalogue-documentation li a {
+    grid-column: 2;
   }
 }
 .insights-grid {

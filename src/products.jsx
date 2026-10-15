@@ -1,34 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  MagnifyingGlass,
   ArrowUpRight,
   ArrowRight,
   CheckCircle,
-  Fan,
-  Waveform,
-  Wind,
-  GearSix,
-  CirclesFour,
-  Wrench,
   FileText,
 } from "@phosphor-icons/react";
 import { url, originalAsset } from "./site-data";
 import { contentFor, currentLocale, localize, uiFor } from "./i18n";
-import catalogueProducts from "../source-products-deduped.json";
 
-const icons = {
-  vacuum: Waveform,
-  rotor: GearSix,
-  fan: Fan,
-  wind: Wind,
-  air: Wind,
-  system: CirclesFour,
-  parts: Wrench,
-};
-function ProductIcon({ type, size = 80 }) {
-  const Icon = icons[type] || Fan;
-  return <Icon size={size} weight="light" aria-hidden="true" />;
-}
 export function ProductExplorer({ ui }) {
   return (
     <section className="wrap product-section">
@@ -39,42 +18,93 @@ export function ProductExplorer({ ui }) {
 function ProductCatalogue() {
   const locale = currentLocale();
   const [selected, setSelected] = useState(null);
-  const categories = [
-    ...new Set(catalogueProducts.map((product) => product.category)),
-  ].map((category) => ({
-    title: catalogueProducts.find((product) => product.category === category)
-      .categoryTitle,
-    products: catalogueProducts.filter(
-      (product) => product.category === category,
-    ),
-  }));
+  const [catalogueProducts, setCatalogueProducts] = useState([]);
+  const [catalogueStatus, setCatalogueStatus] = useState("loading");
+  useEffect(() => {
+    let active = true;
+    fetch(`${import.meta.env.BASE_URL}data/product-content.json`)
+      .then((response) => {
+        if (!response.ok) throw new Error("Catalogue unavailable");
+        return response.json();
+      })
+      .then((products) => {
+        if (!active) return;
+        setCatalogueProducts(products);
+        setCatalogueStatus("ready");
+      })
+      .catch(() => {
+        if (active) setCatalogueStatus("error");
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+  const categoryOrder = [
+    "Vacuümpompen",
+    "Draaischuifpompen",
+    "Zijkanaalventilatoren",
+    "Turbo Blowers",
+    "Luchtmessen",
+    "Systems",
+    "Beluchters",
+    "Spare parts",
+  ];
+  const categories = categoryOrder
+    .map((category) => ({
+      title: category,
+      products: catalogueProducts.filter(
+        (product) => product.category === category,
+      ),
+    }))
+    .filter((category) => category.products.length > 0);
   const copy = {
     nl: {
       eyebrow: "Compleet assortiment",
-      title: "Alle zichtbare DOVAC-producten, overzichtelijk bij elkaar.",
+      title: "Producten en technische informatie van DOVAC.",
       description:
-        "Scroll door alle productcategorieën. Klik op een product voor de bijbehorende documentatie en een gerichte aanvraag.",
+        "Bekijk de productbeschrijvingen en technische specificaties van de bronpagina's. Klik een product open voor de volledige informatie en bijbehorende documentatie.",
+      loading: "Productinformatie laden…",
+      loadError:
+        "De productinformatie kan nu niet worden geladen. Vernieuw de pagina om het opnieuw te proberen.",
+      productDescription: "Productbeschrijving",
+      specifications: "Productspecificaties",
       documentation: "Gerelateerde documentatie",
-      request: "Datasheet aanvragen",
-      close: "Sluit documentatie",
+      request: "Document aanvragen",
+      noDocuments:
+        "Op de DOVAC-bronpagina staat voor dit product geen afzonderlijke documentatielink vermeld.",
+      close: "Sluit productinformatie",
     },
     en: {
       eyebrow: "Complete range",
       title: "All product types, clearly grouped.",
       description:
-        "Scroll through every category. Under each product type, request the relevant technical documentation directly.",
+        "View the product descriptions and technical specifications from the source pages. Open a product for its full information and related documentation.",
+      loading: "Loading product information…",
+      loadError:
+        "Product information could not be loaded. Refresh to try again.",
+      productDescription: "Product description",
+      specifications: "Product specifications",
       documentation: "Related documentation",
-      request: "Request data sheet",
-      close: "Close documentation",
+      request: "Request document",
+      noDocuments:
+        "No separate document link is listed on the DOVAC source page.",
+      close: "Close product information",
     },
     de: {
       eyebrow: "Komplettes Sortiment",
       title: "Alle Produkttypen, übersichtlich zusammengefasst.",
       description:
-        "Scrollen Sie durch alle Kategorien. Unter jedem Produkttyp können Sie die passende technische Dokumentation direkt anfordern.",
+        "Sehen Sie sich die Produktbeschreibungen und technischen Daten der Quellseiten an. Öffnen Sie ein Produkt für alle Informationen und zugehörige Dokumente.",
+      loading: "Produktinformationen werden geladen…",
+      loadError:
+        "Produktinformationen konnten nicht geladen werden. Bitte aktualisieren Sie die Seite.",
+      productDescription: "Produktbeschreibung",
+      specifications: "Produktspezifikationen",
       documentation: "Zugehörige Dokumentation",
-      request: "Datenblatt anfordern",
-      close: "Dokumentation schließen",
+      request: "Dokument anfordern",
+      noDocuments:
+        "Auf der DOVAC-Quellseite ist kein separates Dokument verlinkt.",
+      close: "Produktinformationen schließen",
     },
   }[locale];
   return (
@@ -84,45 +114,115 @@ function ProductCatalogue() {
         <h2>{copy.title}</h2>
         <p>{copy.description}</p>
       </div>
+      {catalogueStatus === "loading" && <p role="status">{copy.loading}</p>}
+      {catalogueStatus === "error" && <p role="alert">{copy.loadError}</p>}
       {categories.map((category) => (
         <section className="catalogue-category" key={category.title}>
           <h3>{category.title}</h3>
           <div className="catalogue-grid">
             {category.products.map((product) => {
-              const isSelected = selected === product.href;
+              const isSelected = selected === product.sourcePath;
               return (
-                <article className="catalogue-product" key={product.href}>
+                <article className="catalogue-product" key={product.sourcePath}>
                   <button
                     type="button"
                     aria-expanded={isSelected}
+                    aria-controls={`product-info-${product.slug}`}
                     onClick={() =>
-                      setSelected(isSelected ? null : product.href)
+                      setSelected(isSelected ? null : product.sourcePath)
                     }
                   >
                     <img
                       src={originalAsset(product.localImage)}
-                      alt={product.title}
-                      width="356"
-                      height="267"
+                      alt={product.mainImage?.alt || product.title}
+                      width="540"
+                      height="482"
                       loading="lazy"
                     />
                     <span>{product.title}</span>
                     <ArrowRight size={20} aria-hidden="true" />
                   </button>
                   {isSelected && (
-                    <div className="catalogue-detail">
-                      <strong>{copy.documentation}</strong>
-                      <p>
-                        Vraag de technische documentatie voor {product.title}{" "}
-                        aan.
-                      </p>
-                      <a
-                        href={`mailto:info@dovac.nl?subject=${encodeURIComponent(`${copy.request}: ${product.title}`)}&body=${encodeURIComponent(`${copy.request}: ${product.title}\n${copy.documentation}:\n\nApplication / toepassing:`)}`}
+                    <div
+                      className="catalogue-detail"
+                      id={`product-info-${product.slug}`}
+                      aria-label={`${product.title} product information`}
+                    >
+                      {product.descriptions.length > 0 && (
+                        <section className="catalogue-description">
+                          <h4>{copy.productDescription}</h4>
+                          {product.descriptions.map((description, index) => (
+                            <div
+                              className="source-description"
+                              key={`${product.slug}-description-${index}`}
+                              dangerouslySetInnerHTML={{
+                                __html: description.html,
+                              }}
+                            />
+                          ))}
+                        </section>
+                      )}
+                      {product.specificationTables.length > 0 && (
+                        <section className="catalogue-specifications">
+                          <h4>{copy.specifications}</h4>
+                          {product.specificationTables.map((table, index) => (
+                            <div
+                              className="specification-table-scroll"
+                              key={`${product.slug}-table-${index}`}
+                              tabIndex="0"
+                              role="region"
+                              aria-label={`${product.title} ${copy.specifications} ${index + 1}`}
+                            >
+                              <table>
+                                <tbody>
+                                  {table
+                                    .filter((row) => row.some(Boolean))
+                                    .map((row, rowIndex) => (
+                                      <tr
+                                        key={`${product.slug}-row-${rowIndex}`}
+                                      >
+                                        {row.map((cell, cellIndex) => {
+                                          const Tag =
+                                            rowIndex === 0 ? "th" : "td";
+                                          return (
+                                            <Tag key={`${cellIndex}-${cell}`}>
+                                              {cell}
+                                            </Tag>
+                                          );
+                                        })}
+                                      </tr>
+                                    ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          ))}
+                        </section>
+                      )}
+                      <section className="catalogue-documentation">
+                        <h4>{copy.documentation}</h4>
+                        {product.relatedDocuments.length > 0 ? (
+                          <ul>
+                            {product.relatedDocuments.map((document, index) => (
+                              <li key={`${product.slug}-document-${index}`}>
+                                <FileText size={18} aria-hidden="true" />
+                                <span>{document.title}</span>
+                                <a
+                                  href={`mailto:info@dovac.nl?subject=${encodeURIComponent(`${copy.request}: ${document.title}`)}&body=${encodeURIComponent(`${copy.request}\nProduct: ${product.title}\nDocument: ${document.title}\n\n`)}`}
+                                >
+                                  {copy.request}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p>{copy.noDocuments}</p>
+                        )}
+                      </section>
+                      <button
+                        className="catalogue-close"
+                        type="button"
+                        onClick={() => setSelected(null)}
                       >
-                        <FileText size={18} aria-hidden="true" />
-                        {copy.request}
-                      </a>
-                      <button type="button" onClick={() => setSelected(null)}>
                         {copy.close}
                       </button>
                     </div>
