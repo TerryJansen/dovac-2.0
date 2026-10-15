@@ -16,6 +16,14 @@ for (const width of [390, 1440]) {
     for (const route of routes) {
       await page.goto(`./nl/${route}/`, { waitUntil: "domcontentloaded" });
       await expect(page.locator("h1")).toHaveCount(1);
+      if (route === "producten") {
+        await expect(page.locator(".catalogue-product")).toHaveCount(96);
+        await page
+          .locator(".catalogue-category")
+          .first()
+          .locator("summary")
+          .click();
+      }
       const images = page.locator("img");
       const imageCount = await images.count();
       const imagesToCheck = imageRoutes.has(route)

@@ -17,7 +17,8 @@ export function ProductExplorer({ ui }) {
 }
 function ProductCatalogue() {
   const locale = currentLocale();
-  const [selected, setSelected] = useState(null);
+  const [selectedPath, setSelectedPath] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const [catalogueProducts, setCatalogueProducts] = useState([]);
   const [catalogueStatus, setCatalogueStatus] = useState("loading");
   useEffect(() => {
@@ -57,50 +58,78 @@ function ProductCatalogue() {
       ),
     }))
     .filter((category) => category.products.length > 0);
+  const normalizedSearch = searchTerm.trim().toLocaleLowerCase(locale);
+  const visibleCategories = categories
+    .map((category) => ({
+      ...category,
+      products: category.products.filter((product) =>
+        product.title.toLocaleLowerCase(locale).includes(normalizedSearch),
+      ),
+    }))
+    .filter((category) => category.products.length > 0);
+  const matchingProductCount = visibleCategories.reduce(
+    (total, category) => total + category.products.length,
+    0,
+  );
   const copy = {
     nl: {
-      eyebrow: "Compleet assortiment",
-      title: "Producten en technische informatie van DOVAC.",
-      description:
-        "Bekijk de productbeschrijvingen en technische specificaties van de bronpagina's. Klik een product open voor de volledige informatie en bijbehorende documentatie.",
+      eyebrow: "Productassortiment",
+      title: "Vind het juiste product",
+      description: "Zoek op productnaam of kies een productgroep.",
       loading: "Productinformatie laden…",
       loadError:
         "De productinformatie kan nu niet worden geladen. Vernieuw de pagina om het opnieuw te proberen.",
+      searchLabel: "Zoek in producten",
+      searchPlaceholder: "Typ een productnaam",
+      resultCount: (products, groups) =>
+        `${products} producten in ${groups} productgroepen`,
+      categoryCount: (count) => `${count} producten`,
+      noResults: "Geen producten gevonden. Probeer een andere zoekterm.",
       productDescription: "Productbeschrijving",
-      specifications: "Productspecificaties",
-      documentation: "Gerelateerde documentatie",
+      specifications: "Technische specificaties",
+      documentation: "Documentatie",
       request: "Document aanvragen",
       noDocuments:
         "Op de DOVAC-bronpagina staat voor dit product geen afzonderlijke documentatielink vermeld.",
       close: "Sluit productinformatie",
     },
     en: {
-      eyebrow: "Complete range",
-      title: "All product types, clearly grouped.",
-      description:
-        "View the product descriptions and technical specifications from the source pages. Open a product for its full information and related documentation.",
+      eyebrow: "Product range",
+      title: "Find the right product",
+      description: "Search by product name or choose a product group.",
       loading: "Loading product information…",
       loadError:
         "Product information could not be loaded. Refresh to try again.",
+      searchLabel: "Search products",
+      searchPlaceholder: "Type a product name",
+      resultCount: (products, groups) =>
+        `${products} products in ${groups} product groups`,
+      categoryCount: (count) => `${count} products`,
+      noResults: "No products found. Try another search.",
       productDescription: "Product description",
-      specifications: "Product specifications",
-      documentation: "Related documentation",
+      specifications: "Technical specifications",
+      documentation: "Documentation",
       request: "Request document",
       noDocuments:
         "No separate document link is listed on the DOVAC source page.",
       close: "Close product information",
     },
     de: {
-      eyebrow: "Komplettes Sortiment",
-      title: "Alle Produkttypen, übersichtlich zusammengefasst.",
-      description:
-        "Sehen Sie sich die Produktbeschreibungen und technischen Daten der Quellseiten an. Öffnen Sie ein Produkt für alle Informationen und zugehörige Dokumente.",
+      eyebrow: "Produktsortiment",
+      title: "Das passende Produkt finden",
+      description: "Suchen Sie nach Produktnamen oder wählen Sie eine Gruppe.",
       loading: "Produktinformationen werden geladen…",
       loadError:
         "Produktinformationen konnten nicht geladen werden. Bitte aktualisieren Sie die Seite.",
+      searchLabel: "Produkte suchen",
+      searchPlaceholder: "Produktnamen eingeben",
+      resultCount: (products, groups) =>
+        `${products} Produkte in ${groups} Produktgruppen`,
+      categoryCount: (count) => `${count} Produkte`,
+      noResults: "Keine Produkte gefunden. Bitte anders suchen.",
       productDescription: "Produktbeschreibung",
-      specifications: "Produktspezifikationen",
-      documentation: "Zugehörige Dokumentation",
+      specifications: "Technische Spezifikationen",
+      documentation: "Dokumentation",
       request: "Dokument anfordern",
       noDocuments:
         "Auf der DOVAC-Quellseite ist kein separates Dokument verlinkt.",
@@ -116,123 +145,187 @@ function ProductCatalogue() {
       </div>
       {catalogueStatus === "loading" && <p role="status">{copy.loading}</p>}
       {catalogueStatus === "error" && <p role="alert">{copy.loadError}</p>}
-      {categories.map((category) => (
-        <section className="catalogue-category" key={category.title}>
-          <h3>{category.title}</h3>
-          <div className="catalogue-grid">
-            {category.products.map((product) => {
-              const isSelected = selected === product.sourcePath;
-              return (
-                <article className="catalogue-product" key={product.sourcePath}>
-                  <button
-                    type="button"
-                    aria-expanded={isSelected}
-                    aria-controls={`product-info-${product.slug}`}
-                    onClick={() =>
-                      setSelected(isSelected ? null : product.sourcePath)
-                    }
+      {catalogueStatus === "ready" && (
+        <div className="catalogue-controls">
+          <label className="catalogue-search">
+            <span>{copy.searchLabel}</span>
+            <input
+              type="search"
+              value={searchTerm}
+              placeholder={copy.searchPlaceholder}
+              onChange={(event) => setSearchTerm(event.target.value)}
+            />
+          </label>
+          <p className="catalogue-result-count" role="status">
+            {copy.resultCount(matchingProductCount, visibleCategories.length)}
+          </p>
+        </div>
+      )}
+      {catalogueStatus === "ready" && matchingProductCount === 0 ? (
+        <p className="catalogue-no-results">{copy.noResults}</p>
+      ) : (
+        visibleCategories.map((category) => (
+          <details
+            className="catalogue-category"
+            key={category.title}
+            open={normalizedSearch ? true : undefined}
+          >
+            <summary>
+              <span
+                className="catalogue-category-title"
+                role="heading"
+                aria-level="3"
+              >
+                {category.title}
+              </span>
+              <span className="catalogue-category-count">
+                {copy.categoryCount(category.products.length)}
+              </span>
+              <ArrowRight size={20} aria-hidden="true" />
+            </summary>
+            <div className="catalogue-grid">
+              {category.products.map((product) => {
+                const isSelected = selectedPath === product.sourcePath;
+                return (
+                  <article
+                    className="catalogue-product"
+                    key={product.sourcePath}
                   >
-                    <img
-                      src={originalAsset(product.localImage)}
-                      alt={product.mainImage?.alt || product.title}
-                      width="540"
-                      height="482"
-                      loading="lazy"
-                    />
-                    <span>{product.title}</span>
-                    <ArrowRight size={20} aria-hidden="true" />
-                  </button>
-                  {isSelected && (
-                    <div
-                      className="catalogue-detail"
-                      id={`product-info-${product.slug}`}
-                      aria-label={`${product.title} product information`}
+                    <button
+                      type="button"
+                      aria-expanded={isSelected}
+                      aria-controls={`product-info-${product.slug}`}
+                      onClick={() =>
+                        setSelectedPath(isSelected ? null : product.sourcePath)
+                      }
                     >
-                      {product.descriptions.length > 0 && (
-                        <section className="catalogue-description">
-                          <h4>{copy.productDescription}</h4>
-                          {product.descriptions.map((description, index) => (
-                            <div
-                              className="source-description"
-                              key={`${product.slug}-description-${index}`}
-                              dangerouslySetInnerHTML={{
-                                __html: description.html,
-                              }}
-                            />
-                          ))}
-                        </section>
-                      )}
-                      {product.specificationTables.length > 0 && (
-                        <section className="catalogue-specifications">
-                          <h4>{copy.specifications}</h4>
-                          {product.specificationTables.map((table, index) => (
-                            <div
-                              className="specification-table-scroll"
-                              key={`${product.slug}-table-${index}`}
-                              tabIndex="0"
-                              role="region"
-                              aria-label={`${product.title} ${copy.specifications} ${index + 1}`}
-                            >
-                              <table>
-                                <tbody>
-                                  {table
-                                    .filter((row) => row.some(Boolean))
-                                    .map((row, rowIndex) => (
-                                      <tr
-                                        key={`${product.slug}-row-${rowIndex}`}
-                                      >
-                                        {row.map((cell, cellIndex) => {
-                                          const Tag =
-                                            rowIndex === 0 ? "th" : "td";
-                                          return (
-                                            <Tag key={`${cellIndex}-${cell}`}>
-                                              {cell}
-                                            </Tag>
-                                          );
-                                        })}
-                                      </tr>
-                                    ))}
-                                </tbody>
-                              </table>
-                            </div>
-                          ))}
-                        </section>
-                      )}
-                      <section className="catalogue-documentation">
-                        <h4>{copy.documentation}</h4>
-                        {product.relatedDocuments.length > 0 ? (
-                          <ul>
-                            {product.relatedDocuments.map((document, index) => (
-                              <li key={`${product.slug}-document-${index}`}>
-                                <FileText size={18} aria-hidden="true" />
-                                <span>{document.title}</span>
-                                <a
-                                  href={`mailto:info@dovac.nl?subject=${encodeURIComponent(`${copy.request}: ${document.title}`)}&body=${encodeURIComponent(`${copy.request}\nProduct: ${product.title}\nDocument: ${document.title}\n\n`)}`}
-                                >
-                                  {copy.request}
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        ) : (
-                          <p>{copy.noDocuments}</p>
-                        )}
-                      </section>
-                      <button
-                        className="catalogue-close"
-                        type="button"
-                        onClick={() => setSelected(null)}
+                      <img
+                        src={originalAsset(product.localImage)}
+                        alt={product.mainImage?.alt || product.title}
+                        width="540"
+                        height="482"
+                        loading="lazy"
+                      />
+                      <span>{product.title}</span>
+                      <ArrowRight size={20} aria-hidden="true" />
+                    </button>
+                    {isSelected && (
+                      <div
+                        className="catalogue-detail"
+                        id={`product-info-${product.slug}`}
+                        aria-label={`${product.title} product information`}
                       >
-                        {copy.close}
-                      </button>
-                    </div>
-                  )}
-                </article>
-              );
-            })}
-          </div>
-        </section>
-      ))}
+                        {product.descriptions.length > 0 && (
+                          <details className="catalogue-detail-group">
+                            <summary>
+                              <span>{copy.productDescription}</span>
+                              <ArrowRight size={17} aria-hidden="true" />
+                            </summary>
+                            <div>
+                              {product.descriptions.map(
+                                (description, index) => (
+                                  <div
+                                    className="source-description"
+                                    key={`${product.slug}-description-${index}`}
+                                    dangerouslySetInnerHTML={{
+                                      __html: description.html,
+                                    }}
+                                  />
+                                ),
+                              )}
+                            </div>
+                          </details>
+                        )}
+                        {product.specificationTables.length > 0 && (
+                          <details className="catalogue-detail-group">
+                            <summary>
+                              <span>{copy.specifications}</span>
+                              <ArrowRight size={17} aria-hidden="true" />
+                            </summary>
+                            <div>
+                              {product.specificationTables.map(
+                                (table, index) => (
+                                  <div
+                                    className="specification-table-scroll"
+                                    key={`${product.slug}-table-${index}`}
+                                    tabIndex="0"
+                                    role="region"
+                                    aria-label={`${product.title} ${copy.specifications} ${index + 1}`}
+                                  >
+                                    <table>
+                                      <tbody>
+                                        {table
+                                          .filter((row) => row.some(Boolean))
+                                          .map((row, rowIndex) => (
+                                            <tr
+                                              key={`${product.slug}-row-${rowIndex}`}
+                                            >
+                                              {row.map((cell, cellIndex) => {
+                                                const Tag =
+                                                  rowIndex === 0 ? "th" : "td";
+                                                return (
+                                                  <Tag
+                                                    key={`${cellIndex}-${cell}`}
+                                                  >
+                                                    {cell}
+                                                  </Tag>
+                                                );
+                                              })}
+                                            </tr>
+                                          ))}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                ),
+                              )}
+                            </div>
+                          </details>
+                        )}
+                        <details className="catalogue-detail-group">
+                          <summary>
+                            <span>{copy.documentation}</span>
+                            <ArrowRight size={17} aria-hidden="true" />
+                          </summary>
+                          <div className="catalogue-documentation">
+                            {product.relatedDocuments.length > 0 ? (
+                              <ul>
+                                {product.relatedDocuments.map(
+                                  (document, index) => (
+                                    <li
+                                      key={`${product.slug}-document-${index}`}
+                                    >
+                                      <FileText size={18} aria-hidden="true" />
+                                      <span>{document.title}</span>
+                                      <a
+                                        href={`mailto:info@dovac.nl?subject=${encodeURIComponent(`${copy.request}: ${document.title}`)}&body=${encodeURIComponent(`${copy.request}\nProduct: ${product.title}\nDocument: ${document.title}\n\n`)}`}
+                                      >
+                                        {copy.request}
+                                      </a>
+                                    </li>
+                                  ),
+                                )}
+                              </ul>
+                            ) : (
+                              <p>{copy.noDocuments}</p>
+                            )}
+                          </div>
+                        </details>
+                        <button
+                          className="catalogue-close"
+                          type="button"
+                          onClick={() => setSelectedPath(null)}
+                        >
+                          {copy.close}
+                        </button>
+                      </div>
+                    )}
+                  </article>
+                );
+              })}
+            </div>
+          </details>
+        ))
+      )}
     </section>
   );
 }
