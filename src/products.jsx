@@ -385,6 +385,15 @@ function ProductCatalogue() {
                       description={description}
                       showMoreLabel={copy.showMore}
                       showLessLabel={copy.showLess}
+                      documents={
+                        index === selectedProduct.descriptions.length - 1
+                          ? selectedProduct.relatedDocuments
+                          : []
+                      }
+                      productTitle={selectedProduct.title}
+                      documentationLabel={copy.documentation}
+                      requestLabel={copy.request}
+                      noDocumentsMessage={copy.noDocuments}
                     />
                   ))}
                 </section>
@@ -424,30 +433,6 @@ function ProductCatalogue() {
                   ))}
                 </section>
               )}
-              <section className="catalogue-product-dialog-section">
-                <h3>{copy.documentation}</h3>
-                <div className="catalogue-documentation">
-                  {selectedProduct.relatedDocuments.length > 0 ? (
-                    <ul>
-                      {selectedProduct.relatedDocuments.map(
-                        (document, index) => (
-                          <li key={`${selectedProduct.slug}-document-${index}`}>
-                            <FileText size={18} aria-hidden="true" />
-                            <span>{document.title}</span>
-                            <a
-                              href={`mailto:info@dovac.nl?subject=${encodeURIComponent(`${copy.request}: ${document.title}`)}&body=${encodeURIComponent(`Product: ${selectedProduct.title}\\nDocument: ${document.title}\\n`)}`}
-                            >
-                              {copy.request}
-                            </a>
-                          </li>
-                        ),
-                      )}
-                    </ul>
-                  ) : (
-                    <p>{copy.noDocuments}</p>
-                  )}
-                </div>
-              </section>
             </div>
           </>
         )}
@@ -455,7 +440,17 @@ function ProductCatalogue() {
     </section>
   );
 }
-function ProductDescription({ description, id, showMoreLabel, showLessLabel }) {
+function ProductDescription({
+  description,
+  id,
+  showMoreLabel,
+  showLessLabel,
+  documents,
+  productTitle,
+  documentationLabel,
+  requestLabel,
+  noDocumentsMessage,
+}) {
   const [expanded, setExpanded] = useState(false);
   const parsed = new DOMParser().parseFromString(description.html, "text/html");
   const sourceText = (
@@ -477,10 +472,34 @@ function ProductDescription({ description, id, showMoreLabel, showLessLabel }) {
     <article className="catalogue-description">
       <div id={id} className="catalogue-description-content">
         {expanded ? (
-          <div
-            className="source-description"
-            dangerouslySetInnerHTML={{ __html: description.html }}
-          />
+          <>
+            <div
+              className="source-description"
+              dangerouslySetInnerHTML={{ __html: description.html }}
+            />
+            <section className="catalogue-description-documentation">
+              <h4>{documentationLabel}</h4>
+              <div className="catalogue-documentation">
+                {documents.length > 0 ? (
+                  <ul>
+                    {documents.map((document, index) => (
+                      <li key={`${productTitle}-document-${index}`}>
+                        <FileText size={18} aria-hidden="true" />
+                        <span>{document.title}</span>
+                        <a
+                          href={`mailto:info@dovac.nl?subject=${encodeURIComponent(`${requestLabel}: ${document.title}`)}&body=${encodeURIComponent(`${requestLabel} — ${productTitle} — ${document.title}`)}`}
+                        >
+                          {requestLabel}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>{noDocumentsMessage}</p>
+                )}
+              </div>
+            </section>
+          </>
         ) : (
           <p className="catalogue-description-preview">{preview}</p>
         )}
