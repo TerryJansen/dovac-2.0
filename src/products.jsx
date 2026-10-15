@@ -10,9 +10,11 @@ import {
   GearSix,
   CirclesFour,
   Wrench,
+  FileText,
 } from "@phosphor-icons/react";
 import { url, originalAsset } from "./site-data";
 import { contentFor, currentLocale, localize, uiFor } from "./i18n";
+import { catalogueFor } from "./product-catalogue";
 
 const icons = {
   vacuum: Waveform,
@@ -115,6 +117,72 @@ export function ProductExplorer({ ui }) {
           </button>
         </div>
       )}
+      <ProductCatalogue />
+    </section>
+  );
+}
+function ProductCatalogue() {
+  const locale = currentLocale();
+  const catalogue = catalogueFor(locale);
+  const copy = {
+    nl: {
+      eyebrow: "Compleet assortiment",
+      title: "Alle producttypen, overzichtelijk bij elkaar.",
+      description:
+        "Scroll door alle categorieën. Onder elk producttype kunt u direct de bijbehorende technische documentatie aanvragen.",
+      documentation: "Gerelateerde documentatie",
+      request: "Datasheet aanvragen",
+    },
+    en: {
+      eyebrow: "Complete range",
+      title: "All product types, clearly grouped.",
+      description:
+        "Scroll through every category. Under each product type, request the relevant technical documentation directly.",
+      documentation: "Related documentation",
+      request: "Request data sheet",
+    },
+    de: {
+      eyebrow: "Komplettes Sortiment",
+      title: "Alle Produkttypen, übersichtlich zusammengefasst.",
+      description:
+        "Scrollen Sie durch alle Kategorien. Unter jedem Produkttyp können Sie die passende technische Dokumentation direkt anfordern.",
+      documentation: "Zugehörige Dokumentation",
+      request: "Datenblatt anfordern",
+    },
+  }[locale];
+  return (
+    <section className="catalogue" aria-label={copy.title}>
+      <div className="catalogue-heading">
+        <p className="eyebrow">{copy.eyebrow}</p>
+        <h2>{copy.title}</h2>
+        <p>{copy.description}</p>
+      </div>
+      <div className="catalogue-grid">
+        {catalogue.map((category) => (
+          <article className="catalogue-category" key={category.title}>
+            <h3>{category.title}</h3>
+            <ul>
+              {category.items.map((item) => (
+                <li key={item}>
+                  <span>{item}</span>
+                  <a
+                    href={`mailto:info@dovac.nl?subject=${encodeURIComponent(`${copy.request}: ${item}`)}&body=${encodeURIComponent(`${copy.request}: ${item}\n${copy.documentation}:\n\nApplication / toepassing:`)}`}
+                    aria-label={`${copy.request}: ${item}`}
+                  >
+                    <FileText size={18} aria-hidden="true" />
+                    {copy.request}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a className="catalogue-doc-link" href={url("datasheets")}>
+              <FileText size={18} aria-hidden="true" />
+              {copy.documentation}
+              <ArrowRight size={18} aria-hidden="true" />
+            </a>
+          </article>
+        ))}
+      </div>
     </section>
   );
 }
