@@ -101,6 +101,8 @@ function ProductCatalogue() {
       noDocuments:
         "Op de DOVAC-bronpagina staat voor dit product geen afzonderlijke documentatielink vermeld.",
       close: "Sluit productinformatie",
+      showMore: "Bekijk meer",
+      showLess: "Bekijk minder",
     },
     en: {
       eyebrow: "Product range",
@@ -122,6 +124,8 @@ function ProductCatalogue() {
       noDocuments:
         "No separate document link is listed on the DOVAC source page.",
       close: "Close product information",
+      showMore: "View more",
+      showLess: "View less",
     },
     de: {
       eyebrow: "Produktsortiment",
@@ -143,6 +147,8 @@ function ProductCatalogue() {
       noDocuments:
         "Auf der DOVAC-Quellseite ist kein separates Dokument verlinkt.",
       close: "Produktinformationen schließen",
+      showMore: "Mehr anzeigen",
+      showLess: "Weniger anzeigen",
     },
   }[locale];
   return (
@@ -373,10 +379,12 @@ function ProductCatalogue() {
                 <section className="catalogue-product-dialog-section">
                   <h3>{copy.productDescription}</h3>
                   {selectedProduct.descriptions.map((description, index) => (
-                    <div
-                      className="source-description"
+                    <ProductDescription
                       key={`${selectedProduct.slug}-description-${index}`}
-                      dangerouslySetInnerHTML={{ __html: description.html }}
+                      id={`product-description-${selectedProduct.slug}-${index}`}
+                      description={description}
+                      showMoreLabel={copy.showMore}
+                      showLessLabel={copy.showLess}
                     />
                   ))}
                 </section>
@@ -445,6 +453,48 @@ function ProductCatalogue() {
         )}
       </dialog>
     </section>
+  );
+}
+function ProductDescription({ description, id, showMoreLabel, showLessLabel }) {
+  const [expanded, setExpanded] = useState(false);
+  const parsed = new DOMParser().parseFromString(description.html, "text/html");
+  const sourceText = (
+    parsed.querySelector("p")?.textContent ||
+    description.text ||
+    ""
+  )
+    .replace(/\s+/g, " ")
+    .trim();
+  const previewLimit = 140;
+  const preview =
+    sourceText.length > previewLimit
+      ? `${sourceText
+          .slice(0, previewLimit)
+          .replace(/\s+\S*$/u, "")
+          .trimEnd()}…`
+      : sourceText;
+  return (
+    <article className="catalogue-description">
+      <div id={id} className="catalogue-description-content">
+        {expanded ? (
+          <div
+            className="source-description"
+            dangerouslySetInnerHTML={{ __html: description.html }}
+          />
+        ) : (
+          <p className="catalogue-description-preview">{preview}</p>
+        )}
+      </div>
+      <button
+        className="catalogue-description-toggle"
+        type="button"
+        aria-controls={id}
+        aria-expanded={expanded}
+        onClick={() => setExpanded((current) => !current)}
+      >
+        {expanded ? showLessLabel : showMoreLabel}
+      </button>
+    </article>
   );
 }
 export function ProductNavigator({ ui }) {

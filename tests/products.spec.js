@@ -77,9 +77,12 @@ test("a product opens a centered dialog with its image and complete source infor
       "src",
       expect.stringContaining(product.localImage),
     );
-    await expect(dialog.locator(".source-description")).toHaveCount(
-      product.descriptions.length,
-    );
+    const previews = await dialog
+      .locator(".catalogue-description-preview")
+      .allTextContents();
+    expect(previews).toHaveLength(product.descriptions.length);
+    expect(previews.every((preview) => preview.length <= 141)).toBe(true);
+    await expect(dialog.locator(".source-description")).toHaveCount(0);
     await expect(dialog.locator(".specification-table-scroll")).toHaveCount(
       product.specificationTables.length,
     );
@@ -89,6 +92,28 @@ test("a product opens a centered dialog with its image and complete source infor
     await expect(dialog).toContainText("Productbeschrijving");
     await expect(dialog).toContainText("Technische specificaties");
     await expect(dialog).toContainText("Documentatie");
+    const moreButton = dialog.getByRole("button", { name: "Bekijk meer" });
+    await expect(moreButton).toHaveCount(product.descriptions.length);
+    await expect(dialog).toContainText(
+      "Onze CPA Triplex H medische vacuümpompen zijn geavanceerde systemen",
+    );
+    await expect(dialog).not.toContainText(
+      "Kwalificatie voor Industrie 4.0-financiering",
+    );
+    await moreButton.click();
+    await expect(dialog.locator(".source-description")).toHaveCount(
+      product.descriptions.length,
+    );
+    const lessButton = dialog.getByRole("button", { name: "Bekijk minder" });
+    await expect(lessButton).toHaveAttribute("aria-expanded", "true");
+    await expect(dialog).toContainText(
+      "Kwalificatie voor Industrie 4.0-financiering",
+    );
+    await lessButton.click();
+    await expect(moreButton).toHaveAttribute("aria-expanded", "false");
+    await expect(dialog).not.toContainText(
+      "Kwalificatie voor Industrie 4.0-financiering",
+    );
     const box = await dialog.boundingBox();
     expect(box).not.toBeNull();
     expect(box.x).toBeGreaterThanOrEqual(0);
