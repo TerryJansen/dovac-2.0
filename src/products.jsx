@@ -14,7 +14,7 @@ import {
 } from "@phosphor-icons/react";
 import { url, originalAsset } from "./site-data";
 import { contentFor, currentLocale, localize, uiFor } from "./i18n";
-import { catalogueFor } from "./product-catalogue";
+import catalogueProducts from "../source-products-deduped.json";
 
 const icons = {
   vacuum: Waveform,
@@ -123,15 +123,25 @@ export function ProductExplorer({ ui }) {
 }
 function ProductCatalogue() {
   const locale = currentLocale();
-  const catalogue = catalogueFor(locale);
+  const [selected, setSelected] = useState(null);
+  const categories = [
+    ...new Set(catalogueProducts.map((product) => product.category)),
+  ].map((category) => ({
+    title: catalogueProducts.find((product) => product.category === category)
+      .categoryTitle,
+    products: catalogueProducts.filter(
+      (product) => product.category === category,
+    ),
+  }));
   const copy = {
     nl: {
       eyebrow: "Compleet assortiment",
-      title: "Alle producttypen, overzichtelijk bij elkaar.",
+      title: "Alle zichtbare DOVAC-producten, overzichtelijk bij elkaar.",
       description:
-        "Scroll door alle categorieën. Onder elk producttype kunt u direct de bijbehorende technische documentatie aanvragen.",
+        "Scroll door alle productcategorieën. Klik op een product voor de bijbehorende documentatie en een gerichte aanvraag.",
       documentation: "Gerelateerde documentatie",
       request: "Datasheet aanvragen",
+      close: "Sluit documentatie",
     },
     en: {
       eyebrow: "Complete range",
@@ -140,6 +150,7 @@ function ProductCatalogue() {
         "Scroll through every category. Under each product type, request the relevant technical documentation directly.",
       documentation: "Related documentation",
       request: "Request data sheet",
+      close: "Close documentation",
     },
     de: {
       eyebrow: "Komplettes Sortiment",
@@ -148,6 +159,7 @@ function ProductCatalogue() {
         "Scrollen Sie durch alle Kategorien. Unter jedem Produkttyp können Sie die passende technische Dokumentation direkt anfordern.",
       documentation: "Zugehörige Dokumentation",
       request: "Datenblatt anfordern",
+      close: "Dokumentation schließen",
     },
   }[locale];
   return (
@@ -157,32 +169,55 @@ function ProductCatalogue() {
         <h2>{copy.title}</h2>
         <p>{copy.description}</p>
       </div>
-      <div className="catalogue-grid">
-        {catalogue.map((category) => (
-          <article className="catalogue-category" key={category.title}>
-            <h3>{category.title}</h3>
-            <ul>
-              {category.items.map((item) => (
-                <li key={item}>
-                  <span>{item}</span>
-                  <a
-                    href={`mailto:info@dovac.nl?subject=${encodeURIComponent(`${copy.request}: ${item}`)}&body=${encodeURIComponent(`${copy.request}: ${item}\n${copy.documentation}:\n\nApplication / toepassing:`)}`}
-                    aria-label={`${copy.request}: ${item}`}
+      {categories.map((category) => (
+        <section className="catalogue-category" key={category.title}>
+          <h3>{category.title}</h3>
+          <div className="catalogue-grid">
+            {category.products.map((product) => {
+              const isSelected = selected === product.href;
+              return (
+                <article className="catalogue-product" key={product.href}>
+                  <button
+                    type="button"
+                    aria-expanded={isSelected}
+                    onClick={() =>
+                      setSelected(isSelected ? null : product.href)
+                    }
                   >
-                    <FileText size={18} aria-hidden="true" />
-                    {copy.request}
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <a className="catalogue-doc-link" href={url("datasheets")}>
-              <FileText size={18} aria-hidden="true" />
-              {copy.documentation}
-              <ArrowRight size={18} aria-hidden="true" />
-            </a>
-          </article>
-        ))}
-      </div>
+                    <img
+                      src={originalAsset(product.localImage)}
+                      alt={product.title}
+                      width="356"
+                      height="267"
+                      loading="lazy"
+                    />
+                    <span>{product.title}</span>
+                    <ArrowRight size={20} aria-hidden="true" />
+                  </button>
+                  {isSelected && (
+                    <div className="catalogue-detail">
+                      <strong>{copy.documentation}</strong>
+                      <p>
+                        Vraag de technische documentatie voor {product.title}{" "}
+                        aan.
+                      </p>
+                      <a
+                        href={`mailto:info@dovac.nl?subject=${encodeURIComponent(`${copy.request}: ${product.title}`)}&body=${encodeURIComponent(`${copy.request}: ${product.title}\n${copy.documentation}:\n\nApplication / toepassing:`)}`}
+                      >
+                        <FileText size={18} aria-hidden="true" />
+                        {copy.request}
+                      </a>
+                      <button type="button" onClick={() => setSelected(null)}>
+                        {copy.close}
+                      </button>
+                    </div>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      ))}
     </section>
   );
 }

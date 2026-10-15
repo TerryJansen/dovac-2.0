@@ -22,55 +22,81 @@
 }
 .catalogue-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
-  margin-top: 42px;
+  margin-top: 22px;
 }
 .catalogue-category {
-  display: flex;
-  min-height: 100%;
-  flex-direction: column;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--surface);
-  padding: 25px;
+  margin-top: 52px;
 }
 .catalogue-category h3 {
   color: var(--text);
-  font-size: 20px;
+  font-size: 28px;
 }
-.catalogue-category ul {
+.catalogue-product {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+.catalogue-product > button {
   display: grid;
-  gap: 0;
-  margin-top: 16px;
+  width: 100%;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  border: 0;
+  background: transparent;
+  padding: 0 20px 20px;
+  color: var(--text);
+  text-align: left;
 }
-.catalogue-category li {
+.catalogue-product > button img {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 190px;
+  object-fit: contain;
+  padding: 16px;
+}
+.catalogue-product > button span {
+  align-self: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+.catalogue-product > button > svg {
+  align-self: center;
+  color: var(--accent);
+}
+.catalogue-product > button:hover span,
+.catalogue-product > button[aria-expanded="true"] span {
+  color: var(--accent);
+}
+.catalogue-detail {
   border-top: 1px solid var(--border);
-  padding: 13px 0;
+  background: var(--panel);
+  padding: 20px;
 }
-.catalogue-category li > span {
-  display: block;
-  font-weight: 500;
-  line-height: 1.35;
+.catalogue-detail p {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
 }
-.catalogue-category li a,
-.catalogue-doc-link {
+.catalogue-detail a,
+.catalogue-detail button {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 600;
-}
-.catalogue-category li a:hover,
-.catalogue-doc-link:hover {
+  margin-top: 16px;
+  border: 0;
+  background: transparent;
   color: var(--accent);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
 }
-.catalogue-doc-link {
-  margin-top: auto;
-  border-top: 1px solid var(--border);
-  padding-top: 18px;
+.catalogue-detail button {
+  margin-left: 18px;
+  color: var(--muted);
 }
 @media (max-width: 1080px) {
   .catalogue-grid {
@@ -86,7 +112,7 @@
     grid-template-columns: 1fr;
   }
   .catalogue-category {
-    padding: 22px;
+    margin-top: 40px;
   }
 }
 .insights-grid {

@@ -1,0 +1,353 @@
+[
+  {
+    "href": "/nl/producten/vacuumpompen/vloeistofring/",
+    "category": "vacuumpompen",
+    "slug": "vloeistofring",
+    "title": "Vloeistofring",
+    "image": "https://static.dovac.nl/_356x267_q100_/categories/vloeistofring/asco-avm-l-96-1778683041.jpg",
+    "categoryTitle": "Vacuümpompen",
+    "localImage": "product-catalogue/vacuumpompen-vloeistofring.jpg"
+  },
+  {
+    "href": "/nl/producten/vacuumpompen/klauwenvacuumpompen/",
+    "category": "vacuumpompen",
+    "slug": "klauwenvacuumpompen",
+    "title": "Klauwen vacuumpompen",
+    "image": "https://static.dovac.nl/_356x267_q100_/categories/klauwenvacuumpompen/vb315-1784356837.png",
+    "categoryTitle": "Vacuümpompen",
+    "localImage": "product-catalogue/vacuumpompen-klauwenvacuumpompen.png"
+  },
+  {
+    "href": "/nl/producten/vacuumpompen/membraanzuiger/",
+    "category": "vacuumpompen",
+    "slug": "membraanzuiger",
+    "title": "Membraan/Zuiger",
+    "image": "https://static.dovac.nl/_356x267_q100_/categories/membraanzuiger/za32-1790850544.png",
+    "categoryTitle": "Vacuümpompen",
+    "localImage": "product-catalogue/vacuumpompen-membraanzuiger.png"
+  },
+  {
+    "href": "/nl/producten/vacuumpompen/roots--vacuumboosters/",
+    "category": "vacuumpompen",
+    "slug": "roots--vacuumboosters",
+    "title": "Roots & Vacuumboosters",
+    "image": "https://static.dovac.nl/_356x267_q100_/categories/roots-vacuumboosters/roots-1779111245-1780923776.png",
+    "categoryTitle": "Vacuümpompen",
+    "localImage": "product-catalogue/vacuumpompen-roots-vacuumboosters.png"
+  },
+  {
+    "href": "/nl/producten/vacuumpompen/atex-vacuumpompen/",
+    "category": "vacuumpompen",
+    "slug": "atex-vacuumpompen",
+    "title": "ATEX Vacuumpompen",
+    "image": "https://static.dovac.nl/_356x267_q100_/categories/atex-vacuumpompen/dovac-atex-1779110680-1780923804.png",
+    "categoryTitle": "Vacuümpompen",
+    "localImage": "product-catalogue/vacuumpompen-atex-vacuumpompen.png"
+  },
+  {
+    "href": "/nl/producten/draaischuifpompen/drooglopend/",
+    "category": "draaischuifpompen",
+    "slug": "drooglopend",
+    "title": "Drooglopend",
+    "image": "https://static.dovac.nl/_356x267_q100_/categories/drooglopend/sc16-sc25-sc40-1790861840.png",
+    "categoryTitle": "Draaischuifpompen",
+    "localImage": "product-catalogue/draaischuifpompen-drooglopend.png"
+  },
+  {
+    "href": "/nl/producten/draaischuifpompen/oliegesmeerde-eentraps-pompen/",
+    "category": "draaischuifpompen",
+    "slug": "oliegesmeerde-eentraps-pompen",
+    "title": "Oliegesmeerde Eentraps Vacuümpompen",
+    "image": "https://static.dovac.nl/_356x267_q100_/categories/oliegesmeerde-eentraps-vacuumpompen/lc12-1778682908.png",
+    "categoryTitle": "Draaischuifpompen",
+    "localImage": "product-catalogue/draaischuifpompen-oliegesmeerde-eentraps-pompen.png"
+  },
+  {
+    "href": "/nl/producten/draaischuifpompen/oliegesmeerde-tweetraps-vacuumpompen/",
+    "category": "draaischuifpompen",
+    "slug": "oliegesmeerde-tweetraps-vacuumpompen",
+    "title": "Oliegesmeerde Tweetraps Vacuümpompen",
+    "image": "https://static.dovac.nl/_356x267_q100_/categories/oliegesmeerde-tweetraps-vacuumpompen/md16-1790861969.png",
+    "categoryTitle": "Draaischuifpompen",
+    "localImage": "product-catalogue/draaischuifpompen-oliegesmeerde-tweetraps-vacuumpompen.png"
+  },
+  {
+    "href": "/nl/producten/zijkanaalventilatoren/vacuum-1-traps/",
+    "category": "zijkanaalventilatoren",
+    "slug": "vacuum-1-traps",
+    "title": "Vacuüm 1-traps",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/vacuum-1-traps/vacuum-1-traps-1779110650.jpg",
+    "categoryTitle": "Zijkanaalventilatoren",
+    "localImage": "product-catalogue/zijkanaalventilatoren-vacuum-1-traps.jpg"
+  },
+  {
+    "href": "/nl/producten/zijkanaalventilatoren/vacuum-2-traps/",
+    "category": "zijkanaalventilatoren",
+    "slug": "vacuum-2-traps",
+    "title": "Vacuüm 2-traps",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/vacuum-2-traps/vacuum-2-traps-1779110652.jpg",
+    "categoryTitle": "Zijkanaalventilatoren",
+    "localImage": "product-catalogue/zijkanaalventilatoren-vacuum-2-traps.jpg"
+  },
+  {
+    "href": "/nl/producten/zijkanaalventilatoren/overdruk-1-traps/",
+    "category": "zijkanaalventilatoren",
+    "slug": "overdruk-1-traps",
+    "title": "Overdruk 1-traps",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/overdruk-1-traps/overdruk-1-traps-1779110645.jpg",
+    "categoryTitle": "Zijkanaalventilatoren",
+    "localImage": "product-catalogue/zijkanaalventilatoren-overdruk-1-traps.jpg"
+  },
+  {
+    "href": "/nl/producten/zijkanaalventilatoren/overdruk-2-traps/",
+    "category": "zijkanaalventilatoren",
+    "slug": "overdruk-2-traps",
+    "title": "Overdruk 2-traps",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/overdruk-2-traps/overdruk-2-traps-1779110648.jpg",
+    "categoryTitle": "Zijkanaalventilatoren",
+    "localImage": "product-catalogue/zijkanaalventilatoren-overdruk-2-traps.jpg"
+  },
+  {
+    "href": "/nl/producten/zijkanaalventilatoren/dovac-atex-zijkanaalventilator/",
+    "category": "zijkanaalventilatoren",
+    "slug": "dovac-atex-zijkanaalventilator",
+    "title": "DOVAC ATEX Zijkanaalventilator",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/dovac-atex-zijkanaalventilator/atex-zijkanaalventilator-1779110642.jpg",
+    "categoryTitle": "Zijkanaalventilatoren",
+    "localImage": "product-catalogue/zijkanaalventilatoren-dovac-atex-zijkanaalventilator.jpg"
+  },
+  {
+    "href": "/nl/producten/turbo-blowers/master-blower-mb-2300/",
+    "category": "turbo-blowers",
+    "slug": "master-blower-mb-2300",
+    "title": "Master Blower MB 2300",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/master-blower-mb-2300/mb-2300-1779110306.png",
+    "categoryTitle": "Turbo Blowers",
+    "localImage": "product-catalogue/turbo-blowers-master-blower-mb-2300.png"
+  },
+  {
+    "href": "/nl/producten/turbo-blowers/master-blower-mb-2800/",
+    "category": "turbo-blowers",
+    "slug": "master-blower-mb-2800",
+    "title": "Master Blower MB 2800",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/master-blower-mb-2800/mb-2800-1779110311.png",
+    "categoryTitle": "Turbo Blowers",
+    "localImage": "product-catalogue/turbo-blowers-master-blower-mb-2800.png"
+  },
+  {
+    "href": "/nl/producten/turbo-blowers/master-blower-mb-5000/",
+    "category": "turbo-blowers",
+    "slug": "master-blower-mb-5000",
+    "title": "Master Blower MB 5000",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/master-blower-mb-5000/mb-5000-1779110315.png",
+    "categoryTitle": "Turbo Blowers",
+    "localImage": "product-catalogue/turbo-blowers-master-blower-mb-5000.png"
+  },
+  {
+    "href": "/nl/producten/turbo-blowers/galex-air-axion-one-720/",
+    "category": "turbo-blowers",
+    "slug": "galex-air-axion-one-720",
+    "title": "Galex Air Axion One 720",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/galex-air-axion-one-720/image007-1790668853.jpg",
+    "categoryTitle": "Turbo Blowers",
+    "localImage": "product-catalogue/turbo-blowers-galex-air-axion-one-720.jpg"
+  },
+  {
+    "href": "/nl/producten/turbo-blowers/galex-air-axion-one-730/",
+    "category": "turbo-blowers",
+    "slug": "galex-air-axion-one-730",
+    "title": "Galex Air Axion One 730",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/galex-air-axion-one-730/image007-1790668800.jpg",
+    "categoryTitle": "Turbo Blowers",
+    "localImage": "product-catalogue/turbo-blowers-galex-air-axion-one-730.jpg"
+  },
+  {
+    "href": "/nl/producten/luchtmessen/aluminium-luchtmessen/",
+    "category": "luchtmessen",
+    "slug": "aluminium-luchtmessen",
+    "title": "Aluminium Luchtmessen",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/aluminium-luchtmessen/luchtmes-aluminium-1779110413.jpg",
+    "categoryTitle": "Luchtmessen",
+    "localImage": "product-catalogue/luchtmessen-aluminium-luchtmessen.jpg"
+  },
+  {
+    "href": "/nl/producten/luchtmessen/luchtkanon/",
+    "category": "luchtmessen",
+    "slug": "luchtkanon",
+    "title": "Luchtkanon",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/luchtkanon/luchtkanon-1779110421.jpg",
+    "categoryTitle": "Luchtmessen",
+    "localImage": "product-catalogue/luchtmessen-luchtkanon.jpg"
+  },
+  {
+    "href": "/nl/producten/luchtmessen/rvs-luchtmessen/",
+    "category": "luchtmessen",
+    "slug": "rvs-luchtmessen",
+    "title": "RVS Luchtmessen",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/rvs-luchtmessen/luchtmes-rvs-1779110428.jpg",
+    "categoryTitle": "Luchtmessen",
+    "localImage": "product-catalogue/luchtmessen-rvs-luchtmessen.jpg"
+  },
+  {
+    "href": "/nl/producten/systems/dvp-cpv-48/",
+    "category": "systems",
+    "slug": "dvp-cpv-48",
+    "title": "DVP CPV 4/8",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/dvp-cpv-48/cpv-4-8-1779110573.png",
+    "categoryTitle": "Systems",
+    "localImage": "product-catalogue/systems-dvp-cpv-48.png"
+  },
+  {
+    "href": "/nl/producten/systems/dvp-cpv-1225--2525--4025--60-25/",
+    "category": "systems",
+    "slug": "dvp-cpv-1225--2525--4025--60-25",
+    "title": "DVP CPV 12/25 - 25/25 - 40/25 - 60-25",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/dvp-cpv-1225-2525-4025-60-25/cpv-12-25-25-25-40-25-60-25-1779110577.png",
+    "categoryTitle": "Systems",
+    "localImage": "product-catalogue/systems-dvp-cpv-1225-2525-4025-60-25.png"
+  },
+  {
+    "href": "/nl/producten/systems/dvp-cpa-simplex/",
+    "category": "systems",
+    "slug": "dvp-cpa-simplex",
+    "title": "DVP CPA Simplex",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/dvp-cpa-simplex/cpa-simplex-1779110593.png",
+    "categoryTitle": "Systems",
+    "localImage": "product-catalogue/systems-dvp-cpa-simplex.png"
+  },
+  {
+    "href": "/nl/producten/systems/dvp-cpa-duplex/",
+    "category": "systems",
+    "slug": "dvp-cpa-duplex",
+    "title": "DVP CPA Duplex",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/dvp-cpa-duplex/cpa-duplex-1779110595.png",
+    "categoryTitle": "Systems",
+    "localImage": "product-catalogue/systems-dvp-cpa-duplex.png"
+  },
+  {
+    "href": "/nl/producten/systems/dvp-cpa-triplex/",
+    "category": "systems",
+    "slug": "dvp-cpa-triplex",
+    "title": "DVP CPA Triplex",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/dvp-cpa-triplex/cpa-triplex-1779110590.png",
+    "categoryTitle": "Systems",
+    "localImage": "product-catalogue/systems-dvp-cpa-triplex.png"
+  },
+  {
+    "href": "/nl/producten/systems/dvp-cpa-triplex-h/",
+    "category": "systems",
+    "slug": "dvp-cpa-triplex-h",
+    "title": "DVP CPA Triplex H",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/dvp-cpa-triplex-h/cpa-triplex-h-1779110587.png",
+    "categoryTitle": "Systems",
+    "localImage": "product-catalogue/systems-dvp-cpa-triplex-h.png"
+  },
+  {
+    "href": "/nl/producten/beluchters/beluchter-10-m3-h/",
+    "category": "beluchters",
+    "slug": "beluchter-10-m3-h",
+    "title": "Beluchter 10 m³/h",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/beluchter-10-m3-h/beluchter-10m3h-1791276067.png",
+    "categoryTitle": "Beluchters",
+    "localImage": "product-catalogue/beluchters-beluchter-10-m3-h.png"
+  },
+  {
+    "href": "/nl/producten/beluchters/beluchter-20-m3-h/",
+    "category": "beluchters",
+    "slug": "beluchter-20-m3-h",
+    "title": "Beluchter 20 m³/h",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/beluchter-20-m3-h/beluchter-20-m3h-1791276045.png",
+    "categoryTitle": "Beluchters",
+    "localImage": "product-catalogue/beluchters-beluchter-20-m3-h.png"
+  },
+  {
+    "href": "/nl/producten/beluchters/beluchter-40-m3-h/",
+    "category": "beluchters",
+    "slug": "beluchter-40-m3-h",
+    "title": "Beluchter 40 m³/h",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/beluchter-40-m3-h/beluchter-40m3h-1791276022.png",
+    "categoryTitle": "Beluchters",
+    "localImage": "product-catalogue/beluchters-beluchter-40-m3-h.png"
+  },
+  {
+    "href": "/nl/producten/beluchters/rack-beluchter/",
+    "category": "beluchters",
+    "slug": "rack-beluchter",
+    "title": "Rack beluchter",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/rack-beluchter/rack-beluchter-1791275998.png",
+    "categoryTitle": "Beluchters",
+    "localImage": "product-catalogue/beluchters-rack-beluchter.png"
+  },
+  {
+    "href": "/nl/producten/spare-parts/vacuumfilters/",
+    "category": "spare-parts",
+    "slug": "vacuumfilters",
+    "title": "Vacuümfilters",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/vacuumfilters/vacuumfilters-1779110503.jpg",
+    "categoryTitle": "Spare parts",
+    "localImage": "product-catalogue/spare-parts-vacuumfilters.jpg"
+  },
+  {
+    "href": "/nl/producten/spare-parts/zuigfilters/",
+    "category": "spare-parts",
+    "slug": "zuigfilters",
+    "title": "Zuigfilters",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/zuigfilters/zuigfilters-1779110498.jpg",
+    "categoryTitle": "Spare parts",
+    "localImage": "product-catalogue/spare-parts-zuigfilters.jpg"
+  },
+  {
+    "href": "/nl/producten/spare-parts/inzetfilters/",
+    "category": "spare-parts",
+    "slug": "inzetfilters",
+    "title": "Inzetfilters",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/inzetfilters/inzetfilters-1779110473.jpg",
+    "categoryTitle": "Spare parts",
+    "localImage": "product-catalogue/spare-parts-inzetfilters.jpg"
+  },
+  {
+    "href": "/nl/producten/spare-parts/geluiddempers/",
+    "category": "spare-parts",
+    "slug": "geluiddempers",
+    "title": "Geluiddempers",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/geluiddempers/geluiddempers-1779110471.jpg",
+    "categoryTitle": "Spare parts",
+    "localImage": "product-catalogue/spare-parts-geluiddempers.jpg"
+  },
+  {
+    "href": "/nl/producten/spare-parts/begrenzingsventiel/",
+    "category": "spare-parts",
+    "slug": "begrenzingsventiel",
+    "title": "Begrenzingsventiel",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/begrenzingsventiel/drukbegrenzingsventiel-1779110465.jpg",
+    "categoryTitle": "Spare parts",
+    "localImage": "product-catalogue/spare-parts-begrenzingsventiel.jpg"
+  },
+  {
+    "href": "/nl/producten/spare-parts/reserveonderdelen/",
+    "category": "spare-parts",
+    "slug": "reserveonderdelen",
+    "title": "Onderhoudskits",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/reserveonderdelen/reserveonderdelen-1779110488.jpg",
+    "categoryTitle": "Spare parts",
+    "localImage": "product-catalogue/spare-parts-reserveonderdelen.jpg"
+  },
+  {
+    "href": "/nl/producten/spare-parts/olie/",
+    "category": "spare-parts",
+    "slug": "olie",
+    "title": "Olie",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/olie/olie-1779110484.jpg",
+    "categoryTitle": "Spare parts",
+    "localImage": "product-catalogue/spare-parts-olie.jpg"
+  },
+  {
+    "href": "/nl/producten/spare-parts/toebehoren/",
+    "category": "spare-parts",
+    "slug": "toebehoren",
+    "title": "Toebehoren",
+    "image": "https://static.dovac.nl/_356x267_q100_/producten/toebehoren/vacuummeters-1779110509.jpg",
+    "categoryTitle": "Spare parts",
+    "localImage": "product-catalogue/spare-parts-toebehoren.jpg"
+  }
+]
