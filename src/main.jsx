@@ -78,7 +78,7 @@ function BrandLogo() {
       />
       <img
         className="brand-logo-dark"
-        src={`${base}images/logo-dark.png`}
+        src={`${base}images/logo-dark-contrast.png`}
         width="260"
         height="134"
         alt=""

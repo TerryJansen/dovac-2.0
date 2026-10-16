@@ -38,6 +38,16 @@ test("brand logo switches to the dark-theme variant", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await expect(page.locator(".brand-logo-light").first()).not.toBeVisible();
   await expect(page.locator(".brand-logo-dark").first()).toBeVisible();
+  await expect(page.locator(".brand-logo-dark")).toHaveCount(2);
+  await expect(page.locator(".brand-logo-dark").nth(1)).toHaveAttribute(
+    "src",
+    /logo-dark-contrast[.]png$/,
+  );
+  await expect(page.locator("footer .brand-logo-dark")).toBeVisible();
+  await expect(page.locator("footer .brand-logo-dark")).toHaveJSProperty(
+    "naturalWidth",
+    260,
+  );
   await expect(page.locator(".brand-logo-dark").first()).toHaveJSProperty(
     "naturalWidth",
     260,
